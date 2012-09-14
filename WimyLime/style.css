@@ -1,0 +1,30 @@
+
+body
+{
+	background-color: black;
+	color: white;
+	margin: 0px;
+	padding: 0px;
+}
+
+#allcontent
+{
+	width: 480px;
+	height: 800px;
+	padding: 0px;
+	margin-left : auto;
+	margin-right : auto;
+
+	border: 0px;
+	
+	background-color: white;
+}
+
+#mycanvas
+{
+	width: 460px;
+	height: 300px; 
+	padding: 0px;
+	margin: 0px;
+	
+}

@@ -1,0 +1,173 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, user-scalable=no" />
+<title>YouTube Player API Sample</title>
+<link href="style.css" rel="stylesheet" type="text/css" />
+
+<script src="http://www.google.com/jsapi" type="text/javascript"></script>
+<script src="youtube.js" type="text/javascript"></script>
+<script src="common.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+var TOUCH_HEIGHT = 40.0;
+var TOUCH_WIDTH = CANVAS_WIDTH / 3.0;
+var NOTE_SHOWING_LENGTH = 5.0;
+var NOTE_HEIGHT = 3.0;
+
+var NOTE_AREA_HEIGHT = CANVAS_HEIGHT - TOUCH_HEIGHT;
+var NOTE_TOUCH_CHECK_BAR_POSITION = 10.0;
+
+function getShowingNotes()
+{
+	/*var notes = [ 9.311, 9.52, 9.868, 10.217, 10.612, 11.169, 11.773, 12.121, 12.446, 12.794, 13.119, 13.514, 14.118, 14.652, 15.047, 15.348, 15.673, 16.045, 16.393, 16.997, 17.508, 17.972, 18.251, 18.576, 18.924, 19.389, 20.805, 21.13, 21.502, 21.873, 22.245, 22.593, 22.941, 23.313, 23.661, 24.009 ];
+	*/
+	
+	var notesStr = "Z 5.863,Z 6.579,Z 7.274,Z 8.001,X 8.708,X 9.029,X 9.382,X 9.768,X 10.123,X 10.769,X 11.252,X 11.592,X 11.953,X 12.303,X 12.645,X 13.038,X 13.665,X 14.147,X 14.516,X 14.869,X 15.239,X 15.598,X 15.978,X 16.567,X 17.092,X 17.451,X 17.773,X 18.133,X 18.494,";
+	
+	var currentVideoTime = ytplayer.getCurrentTime();
+	var bottomTime = currentVideoTime - NOTE_SHOWING_LENGTH;
+	var topTime = currentVideoTime + NOTE_SHOWING_LENGTH;
+	
+	var ret = [];
+	
+	for ( var i=0; i<notes.length; ++i)
+	{
+		if ( notes[i] >= bottomTime && notes[i] <= topTime )
+		{
+			ret.push(notes[i]);
+		}
+	}
+	
+	return ret;
+}
+
+function drawNote(context)
+{
+	if ( ytplayer )
+	{
+		var currentVideoTime = ytplayer.getCurrentTime();
+		var notes = getShowingNotes();
+			
+		context.fillStyle = "rgb(150,150,150)";
+			
+		for ( var i=0; i<notes.length; ++i )
+	   	{
+			var x = 0;
+			var y = (CANVAS_HEIGHT - TOUCH_HEIGHT - NOTE_TOUCH_CHECK_BAR_POSITION) - (( notes[i] - currentVideoTime ) * 50.0);
+			
+			if ( y >= (CANVAS_HEIGHT - TOUCH_HEIGHT)) continue;
+			
+			context.fillRect(x,y,CANVAS_WIDTH,NOTE_HEIGHT);
+		}
+	}
+}
+
+var frameAcc = 0;
+function drawBackground(context)
+{
+	++frameAcc;
+	
+	var strength = Math.floor(Math.abs(Math.sin(frameAcc/30.0)) * 30.0);
+	var rgb = "rgb(" + strength + "," + strength + "," + strength + ")";
+	context.fillStyle = rgb;
+	context.fillRect(0,0, CANVAS_WIDTH, CANVAS_HEIGHT);
+}
+
+var pressed_Z = false;
+var pressed_X = false;
+var pressed_C = false;
+function drawTouchArea(context)
+{
+	
+	for ( var i=0; i<3; ++i )
+	{
+		context.fillStyle = "rgb(255,255,255)";
+
+		var startX = (CANVAS_WIDTH / 3) * i;
+		
+		if ( i == 0 && pressed_Z ) context.fillStyle="rgb(0,0,0)";
+		if ( i == 1 && pressed_X ) context.fillStyle="rgb(0,0,0)";
+		if ( i == 2 && pressed_C ) context.fillStyle="rgb(0,0,0)";
+		
+		context.fillRect(startX, CANVAS_HEIGHT - TOUCH_HEIGHT, CANVAS_WIDTH / 3 - 5, TOUCH_HEIGHT);
+	}
+	
+	pressed_Z = false;
+	pressed_X = false;
+	pressed_C = false;
+}
+
+function drawCheckBar(context)
+{
+	context.fillStyle = "rgb(255,255,255)";
+	context.fillRect(0, CANVAS_HEIGHT - TOUCH_HEIGHT - NOTE_TOUCH_CHECK_BAR_POSITION, CANVAS_WIDTH, 2);
+}
+
+function draw()
+{
+	var canvas = document.getElementById("mycanvas");
+	
+	if ( canvas == null ) return;
+	
+	var context = canvas.getContext("2d");
+
+	drawBackground(context);
+	
+	drawNote(context);
+	
+	drawCheckBar(context);
+	drawTouchArea(context);
+}
+
+function onCanvasClick(event)
+{
+    event = event || window.event;
+
+    var canvas = document.getElementById('mycanvas'),
+        x = event.pageX - canvas.offsetLeft,
+        y = event.pageY - canvas.offsetTop;
+
+    if ( y < CANVAS_HEIGHT - TOUCH_HEIGHT ) return;
+    
+    if ( x < TOUCH_WIDTH )
+    {
+    	onKey_Z();
+    }
+    else if ( x >= CANVAS_WIDTH - TOUCH_WIDTH )
+    {
+    	onKey_C();
+    }
+    else
+    {
+    	onKey_X();
+    }
+}
+
+function onKey_Z() { pressed_Z=true; console.log("Z"); }
+function onKey_X() { pressed_X=true; console.log("X");}
+function onKey_C() { pressed_C=true; console.log("C");}
+
+function onGameKeyDown(event)
+{
+	if ( event.keyCode == KEYCODE_Z ) onKey_Z();
+	if ( event.keyCode == KEYCODE_X ) onKey_X();
+	if ( event.keyCode == KEYCODE_C ) onKey_C();
+}
+
+document.onkeydown=onGameKeyDown;
+startMainLoop(draw);
+      
+</script>
+</head>
+<body>
+	<div id="allcontent">
+		<div id="videoDiv">Loading...</div>
+		<br />
+		<canvas id="mycanvas"></canvas>
+		<br />
+	</div>
+	<textarea id="output" rows="5" cols="20">    </textarea>
+</body>
+</html>
+​

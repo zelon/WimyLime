@@ -1,0 +1,38 @@
+application: wimylime
+version: 1
+runtime: python
+api_version: 1
+
+handlers:
+- url: /
+  static_files: index.htm
+  upload: index.htm
+
+- url: /recorder.htm
+  static_files: recorder.htm
+  upload: recorder.htm
+
+- url: /player.htm
+  static_files: player.htm
+  upload: player.htm
+  
+- url: /style.css
+  static_files: style.css
+  upload: style.css
+  
+- url: /youtube.js
+  static_files: youtube.js
+  upload: youtube.js
+
+- url: /recorder.js
+  static_files: youtube.js
+  upload: youtube.js
+
+- url: /player.js
+  static_files: youtube.js
+  upload: youtube.js
+
+- url: /common.js
+  static_files: common.js
+  upload: common.js
+  
