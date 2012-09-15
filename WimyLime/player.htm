@@ -44,6 +44,8 @@ function getShowingNotes()
 
 function drawNote(context)
 {
+	return;
+	
 	if ( ytplayer )
 	{
 		var currentVideoTime = ytplayer.getCurrentTime();
@@ -77,9 +79,10 @@ function drawBackground(context)
 var pressed_Z = false;
 var pressed_X = false;
 var pressed_C = false;
+var pressed_V = false;
+
 function drawTouchArea(context)
 {
-	
 	for ( var i=0; i<3; ++i )
 	{
 		context.fillStyle = "rgb(255,255,255)";
@@ -144,15 +147,45 @@ function onCanvasClick(event)
     }
 }
 
-function onKey_Z() { pressed_Z=true; console.log("Z"); }
-function onKey_X() { pressed_X=true; console.log("X");}
-function onKey_C() { pressed_C=true; console.log("C");}
+function onKey_Z()
+{
+	pressed_Z=true;
+	debugMsg("Z");
+}
+
+function onKey_X()
+{
+	pressed_X=true;
+	debugMsg("X");
+}
+
+function onKey_C()
+{
+	pressed_C=true;
+	debugMsg("C");
+}
+
+function onKey_V()
+{
+	pressed_V=true;
+	debugMsg("V");
+}
+
+function debugMsg(msg)
+{
+	console.log(msg);
+	
+	var output = document.getElementById("output");
+	
+	output.innerHTML = msg + "<br/>" + output.innerHTML;
+}
 
 function onGameKeyDown(event)
 {
 	if ( event.keyCode == KEYCODE_Z ) onKey_Z();
 	if ( event.keyCode == KEYCODE_X ) onKey_X();
 	if ( event.keyCode == KEYCODE_C ) onKey_C();
+	if ( event.keyCode == KEYCODE_V ) onKey_V();
 }
 
 document.onkeydown=onGameKeyDown;
@@ -163,11 +196,23 @@ startMainLoop(draw);
 <body>
 	<div id="allcontent">
 		<div id="videoDiv">Loading...</div>
-		<br />
 		<canvas id="mycanvas"></canvas>
-		<br />
+		<div id="controller">
+			<table id="inputTable">
+				<tr>
+					<td id="inputPadZ" ontouchstart="onKey_Z();"></td>
+					<td id="inputPadX" ontouchstart="onKey_X();"></td>
+					<td id="inputPadC" ontouchstart="onKey_C();"></td>
+					<td id="inputPadV" ontouchstart="onKey_V();"></td>
+				</tr>
+			</table>
+		</div>
 	</div>
-	<textarea id="output" rows="5" cols="20">    </textarea>
+	<br/>
+	<br/>
+	<br/>
+	<div id="output" style="background-color:red; height: 500px;">
+	</div>
 </body>
 </html>
 ​

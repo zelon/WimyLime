@@ -5,6 +5,7 @@ var CANVAS_HEIGHT = 300;
 var KEYCODE_Z = 90;
 var KEYCODE_X = 88;
 var KEYCODE_C = 67;
+var KEYCODE_V = 86;
 
 var FPS = 30;
 
