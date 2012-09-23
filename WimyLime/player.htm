@@ -188,6 +188,30 @@ function onGameKeyDown(event)
 	if ( event.keyCode == KEYCODE_V ) onKey_V();
 }
 
+function onTouchPad1(e)
+{
+	e.preventDefault();
+	onKey_Z();
+}
+
+function onTouchPad2(e)
+{
+	e.preventDefault();
+	onKey_X();
+}
+
+function onTouchPad3(e)
+{
+	e.preventDefault();
+	onKey_C();
+}
+
+function onTouchPad4(e)
+{
+	e.preventDefault();
+	onKey_V();
+}
+
 document.onkeydown=onGameKeyDown;
 startMainLoop(draw);
       
@@ -200,10 +224,10 @@ startMainLoop(draw);
 		<div id="controller">
 			<table id="inputTable">
 				<tr>
-					<td id="inputPadZ" ontouchstart="onKey_Z();"></td>
-					<td id="inputPadX" ontouchstart="onKey_X();"></td>
-					<td id="inputPadC" ontouchstart="onKey_C();"></td>
-					<td id="inputPadV" ontouchstart="onKey_V();"></td>
+					<td id="inputPadZ"></td>
+					<td id="inputPadX"></td>
+					<td id="inputPadC"></td>
+					<td id="inputPadV"></td>
 				</tr>
 			</table>
 		</div>
@@ -213,6 +237,12 @@ startMainLoop(draw);
 	<br/>
 	<div id="output" style="background-color:red; height: 500px;">
 	</div>
+	<script>
+	document.getElementById("inputPadZ").addEventListener("touchstart", onTouchPad1, false);
+	document.getElementById("inputPadX").addEventListener("touchstart", onTouchPad2, false);
+	document.getElementById("inputPadC").addEventListener("touchstart", onTouchPad3, false);
+	document.getElementById("inputPadV").addEventListener("touchstart", onTouchPad4, false);
+	</script>
 </body>
 </html>
 ​
