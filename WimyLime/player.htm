@@ -2,11 +2,10 @@
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, user-scalable=no" />
-<title>YouTube Player API Sample</title>
+<title>WimyLime Player</title>
 <link href="style.css" rel="stylesheet" type="text/css" />
 
 <script src="http://www.google.com/jsapi" type="text/javascript"></script>
-<script src="youtube.js" type="text/javascript"></script>
 <script src="common.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -81,24 +80,38 @@ var pressed_X = false;
 var pressed_C = false;
 var pressed_V = false;
 
-function drawTouchArea(context)
+function drawPadEffect(context)
 {
-	for ( var i=0; i<3; ++i )
-	{
-		context.fillStyle = "rgb(255,255,255)";
+	const EFFECT_WIDTH = CANVAS_WIDTH / 4;
+	const EFFECT_HEIGHT = CANVAS_HEIGHT;
+	const EFFECT_MARGIN = 2;
 
-		var startX = (CANVAS_WIDTH / 3) * i;
-		
-		if ( i == 0 && pressed_Z ) context.fillStyle="rgb(0,0,0)";
-		if ( i == 1 && pressed_X ) context.fillStyle="rgb(0,0,0)";
-		if ( i == 2 && pressed_C ) context.fillStyle="rgb(0,0,0)";
-		
-		context.fillRect(startX, CANVAS_HEIGHT - TOUCH_HEIGHT, CANVAS_WIDTH / 3 - 5, TOUCH_HEIGHT);
+	var startX = 0;
+
+	context.fillStyle="rgba(255,255,255, 0.1)";
+	if ( pressed_Z )
+	{
+		context.fillRect(startX + EFFECT_MARGIN, 0, EFFECT_WIDTH - ( 2 * EFFECT_MARGIN ), EFFECT_HEIGHT);
 	}
 	
-	pressed_Z = false;
-	pressed_X = false;
-	pressed_C = false;
+	startX += EFFECT_WIDTH;
+	
+	if ( pressed_X )
+	{
+		context.fillRect(startX + EFFECT_MARGIN, 0, EFFECT_WIDTH - ( 2 * EFFECT_MARGIN ), EFFECT_HEIGHT);
+	}
+	
+	startX += EFFECT_WIDTH;
+	if ( pressed_C )
+	{
+		context.fillRect(startX + EFFECT_MARGIN, 0, EFFECT_WIDTH - ( 2 * EFFECT_MARGIN ), EFFECT_HEIGHT);
+	}
+	
+	startX += EFFECT_WIDTH;
+	if ( pressed_V )
+	{
+		context.fillRect(startX + EFFECT_MARGIN, 0, EFFECT_WIDTH - ( 2 * EFFECT_MARGIN ), EFFECT_HEIGHT);
+	}
 }
 
 function drawCheckBar(context)
@@ -120,99 +133,9 @@ function draw()
 	drawNote(context);
 	
 	drawCheckBar(context);
-	drawTouchArea(context);
+	drawPadEffect(context);
 }
 
-function onCanvasClick(event)
-{
-    event = event || window.event;
-
-    var canvas = document.getElementById('mycanvas'),
-        x = event.pageX - canvas.offsetLeft,
-        y = event.pageY - canvas.offsetTop;
-
-    if ( y < CANVAS_HEIGHT - TOUCH_HEIGHT ) return;
-    
-    if ( x < TOUCH_WIDTH )
-    {
-    	onKey_Z();
-    }
-    else if ( x >= CANVAS_WIDTH - TOUCH_WIDTH )
-    {
-    	onKey_C();
-    }
-    else
-    {
-    	onKey_X();
-    }
-}
-
-function onKey_Z()
-{
-	pressed_Z=true;
-	debugMsg("Z");
-}
-
-function onKey_X()
-{
-	pressed_X=true;
-	debugMsg("X");
-}
-
-function onKey_C()
-{
-	pressed_C=true;
-	debugMsg("C");
-}
-
-function onKey_V()
-{
-	pressed_V=true;
-	debugMsg("V");
-}
-
-function debugMsg(msg)
-{
-	console.log(msg);
-	
-	var output = document.getElementById("output");
-	
-	output.innerHTML = msg + "<br/>" + output.innerHTML;
-}
-
-function onGameKeyDown(event)
-{
-	if ( event.keyCode == KEYCODE_Z ) onKey_Z();
-	if ( event.keyCode == KEYCODE_X ) onKey_X();
-	if ( event.keyCode == KEYCODE_C ) onKey_C();
-	if ( event.keyCode == KEYCODE_V ) onKey_V();
-}
-
-function onTouchPad1(e)
-{
-	e.preventDefault();
-	onKey_Z();
-}
-
-function onTouchPad2(e)
-{
-	e.preventDefault();
-	onKey_X();
-}
-
-function onTouchPad3(e)
-{
-	e.preventDefault();
-	onKey_C();
-}
-
-function onTouchPad4(e)
-{
-	e.preventDefault();
-	onKey_V();
-}
-
-document.onkeydown=onGameKeyDown;
 startMainLoop(draw);
       
 </script>
@@ -220,14 +143,14 @@ startMainLoop(draw);
 <body>
 	<div id="allcontent">
 		<div id="videoDiv">Loading...</div>
-		<canvas id="mycanvas"></canvas>
+		<canvas id="mycanvas" width="480" height="400"></canvas>
 		<div id="controller">
 			<table id="inputTable">
 				<tr>
-					<td id="inputPadZ"></td>
-					<td id="inputPadX"></td>
-					<td id="inputPadC"></td>
-					<td id="inputPadV"></td>
+					<td id="inputPad1"></td>
+					<td id="inputPad2"></td>
+					<td id="inputPad3"></td>
+					<td id="inputPad4"></td>
 				</tr>
 			</table>
 		</div>
@@ -238,11 +161,18 @@ startMainLoop(draw);
 	<div id="output" style="background-color:red; height: 500px;">
 	</div>
 	<script>
-	document.getElementById("inputPadZ").addEventListener("touchstart", onTouchPad1, false);
-	document.getElementById("inputPadX").addEventListener("touchstart", onTouchPad2, false);
-	document.getElementById("inputPadC").addEventListener("touchstart", onTouchPad3, false);
-	document.getElementById("inputPadV").addEventListener("touchstart", onTouchPad4, false);
+	document.getElementById("inputPad1").addEventListener("touchstart", onTouchPad1, false);
+	document.getElementById("inputPad2").addEventListener("touchstart", onTouchPad2, false);
+	document.getElementById("inputPad3").addEventListener("touchstart", onTouchPad3, false);
+	document.getElementById("inputPad4").addEventListener("touchstart", onTouchPad4, false);
+	
+	document.getElementById("inputPad1").addEventListener("touchend", onTouchPadEnd1, false);
+	document.getElementById("inputPad2").addEventListener("touchend", onTouchPadEnd2, false);
+	document.getElementById("inputPad3").addEventListener("touchend", onTouchPadEnd3, false);
+	document.getElementById("inputPad4").addEventListener("touchend", onTouchPadEnd4, false);
 	</script>
+	<script src="youtube.js" type="text/javascript"></script>
+
 </body>
 </html>
 ​
