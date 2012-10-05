@@ -1,54 +1,84 @@
 <html>
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-    <title>YouTube Player API Sample</title>
+    <title>WimyLime Recorder</title>
     <link href="style.css" rel="stylesheet" type="text/css"/>
 
     <script src="common.js"></script>
     <script>
     var keytyped = false;
-
-    document.onkeydown = addKey;
-    
     var keylog = "";
-    function addKey(event)
+    
+    var notePad1 = [];
+    var notePad2 = [];
+    var notePad3 = [];
+    var notePad4 = [];
+    
+    function getCurrentYoutubeTimeString()
     {
-    	if ( ytplayer == null )
+    	if ( g_youtubePlayer == null )
     	{
-        	keylog = keylog + "0";
+        	return 0.0;
     	}
     	else
     	{
-        	keylog = keylog + ytplayer.getCurrentTime();
+        	return g_youtubePlayer.getCurrentTime();
     	}
-
-    	keytyped = true;
-    	
-    	if ( event.keyCode == KEYCODE_Z )
-    	{
-    		keylog = keylog + " Z ";
-    	}
-    	else if ( event.keyCode == KEYCODE_X )
-    	{
-    		keylog = keylog + " X ";
-    		
-    	}
-    	else if ( event.keyCode == KEYCODE_C )
-    	{
-    		keylog = keylog + " C ";
-    	}
-    	else
-    	{
-    		return;
-    	}
-
-
-    	keylog = keylog + ",<br />";
-    	
+    }
+    
+    function onGamePad1()
+    {
+    	notePad1.push(getCurrentYoutubeTimeString());
+    	generateResult();
+    }
+    
+    function onGamePad2()
+    {
+    	notePad2.push(getCurrentYoutubeTimeString());
+    	generateResult();
+    }
+    
+    function onGamePad3()
+    {
+    	notePad3.push(getCurrentYoutubeTimeString());
+    	generateResult();
+    }
+    
+    function onGamePad4()
+    {
+    	notePad4.push(getCurrentYoutubeTimeString());
+    	generateResult();
+    }
+    
+    function makeNote(key, arr)
+    {
+		var note = key + " = [ ";
+		
+		for ( var i=0; i<arr.length; ++i )
+		{
+			if ( i != 0 )
+			{
+				note += ", ";
+			}
+			note += arr[i].toString();
+		}
+		note += "],";
+		
+		return note;
+    }
+    
+    function generateResult()
+    {
     	var logDiv = document.getElementById("result");
+
+    	var keylog = "notes = {";
     	
+    	keylog += makeNote("pad1", notePad1);
+    	keylog += makeNote("pad2", notePad2);
+    	keylog += makeNote("pad3", notePad3);
+    	keylog += makeNote("pad4", notePad4);
     	
-    	
+    	keylog += "}";
     	logDiv.innerHTML = keylog;
     }
 
@@ -75,7 +105,6 @@
     </script>
     
     <script src="http://www.google.com/jsapi" type="text/javascript"></script>
-    <script src="youtube.js" type="text/javascript"></script>
     <script src="recorder.js" type="text/javascript"></script>
   </head>
   <body>
@@ -83,10 +112,36 @@
 	    <div id="videoDiv">Loading...</div>
 	    <br />
 	    <canvas id="mycanvas" width="480" height="300"></canvas>
+	    <div id="controller">
+			<table id="inputTable">
+				<tr>
+					<td id="inputPad1"></td>
+					<td id="inputPad2"></td>
+					<td id="inputPad3"></td>
+					<td id="inputPad4"></td>
+				</tr>
+			</table>
+		</div>
+		<script>
+		document.getElementById("inputPad1").addEventListener("touchstart", onTouchPad1, false);
+		document.getElementById("inputPad2").addEventListener("touchstart", onTouchPad2, false);
+		document.getElementById("inputPad3").addEventListener("touchstart", onTouchPad3, false);
+		document.getElementById("inputPad4").addEventListener("touchstart", onTouchPad4, false);
+		
+		document.getElementById("inputPad1").addEventListener("touchend", onTouchPadEnd1, false);
+		document.getElementById("inputPad2").addEventListener("touchend", onTouchPadEnd2, false);
+		document.getElementById("inputPad3").addEventListener("touchend", onTouchPadEnd3, false);
+		document.getElementById("inputPad4").addEventListener("touchend", onTouchPadEnd4, false);
+		</script>
+	    
 	    <br />
-	    <div id="result"></div>
+	    
   	</div>
-    
+
+    <div id="result"></div>
+    <div id="output"></div>
+
+    <script src="youtube.js" type="text/javascript"></script>
   </body>
 </html>
 ​

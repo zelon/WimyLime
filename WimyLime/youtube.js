@@ -37,9 +37,9 @@ google.setOnLoadCallback(_run);
 
   // 3. This function creates an <iframe> (and YouTube player)
   //    after the API code downloads.
-  var player;
+  var g_youtubePlayer;
   function onYouTubeIframeAPIReady() {
-    player = new YT.Player('videoDiv', {
+	  g_youtubePlayer = new YT.Player('videoDiv', {
       width: '480',
       height: '300',
       videoId: '3fy4cqWMhyI',
@@ -66,5 +66,5 @@ google.setOnLoadCallback(_run);
     }
   }
   function stopVideo() {
-    player.stopVideo();
+	  g_youtubePlayer.stopVideo();
   }
