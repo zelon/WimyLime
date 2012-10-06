@@ -9,12 +9,76 @@ var KEYCODE_V = 86;
 
 var FPS = 30;
 
+function startLoop()
+{
+	setInterval(mainFrameFunction, 1000/FPS);
+}
+
+var mainFrameFunction;
 function startMainLoop(frameFunction)
 {
-	setInterval(function()
-			{
-				frameFunction();
-			}, 1000/FPS);
+	mainFrameFunction = frameFunction;
+	loadImages();
+}
+
+var image_note1 = null;
+var image_note2 = null;
+var image_note3 = null;
+var image_note4 = null;
+
+var image_note1pop = null;
+var image_note2pop = null;
+var image_note3pop = null;
+var image_note4pop = null;
+
+var loadedCount = 0;
+
+function onLoadedImage()
+{
+	console.log("onLoadedImage");
+	loadedCount++;
+	
+	if ( loadedCount == 8 )
+	{
+		startLoop();
+		console.log("startLoop");
+	}
+}
+
+function loadImages()
+{
+	image_note1 = new Image();
+	image_note1.src = "/images/note1.png";
+	image_note1.onload = onLoadedImage;
+
+	image_note2 = new Image();
+	image_note2.src = "/images/note2.png";
+	image_note2.onload = onLoadedImage;
+
+	image_note3 = new Image();
+	image_note3.src = "/images/note3.png";
+	image_note3.onload = onLoadedImage;
+
+	image_note4 = new Image();
+	image_note4.src = "/images/note4.png";
+	image_note4.onload = onLoadedImage;
+
+	image_note1pop = new Image();
+	image_note1pop.src = "/images/note1pop.png";
+	image_note1pop.onload = onLoadedImage;
+
+	image_note2pop = new Image();
+	image_note2pop.src = "/images/note2pop.png";
+	image_note2pop.onload = onLoadedImage;
+
+	image_note3pop = new Image();
+	image_note3pop.src = "/images/note3pop.png";
+	image_note3pop.onload = onLoadedImage;
+
+	image_note4pop = new Image();
+	image_note4pop.src = "/images/note4pop.png";
+	image_note4pop.onload = onLoadedImage;
+
 }
 
 function onKey_Z()

@@ -55,7 +55,18 @@ function getShowingNotes()
 	return ret;
 }
 
-function drawNote(context)
+function drawNote(context, img, centerX, centerY)
+{
+	var centerOfImage = img.width / 2;
+	var tileUnitHeight = img.width;
+	var numberOfTile = img.height / tileUnitHeight;
+	
+	var drawTileIndex = frameAcc % numberOfTile;
+	
+	context.drawImage(img, 0, drawTileIndex * tileUnitHeight, img.width, tileUnitHeight, centerX - centerOfImage, centerY - centerOfImage, img.width, tileUnitHeight);
+}
+
+function drawAllNote(context)
 {
 	if ( g_youtubePlayer && g_youtubePlayer.getCurrentTime )
 	{
@@ -74,7 +85,7 @@ function drawNote(context)
 			
 			if ( y >= (CANVAS_HEIGHT)) continue;
 			
-			context.fillRect(x,y,CANVAS_WIDTH,NOTE_HEIGHT);
+			drawNote(context, image_note1, 120/2, y);
 		}
 	}
 }
@@ -145,7 +156,7 @@ function draw()
 
 	drawBackground(context);
 	
-	drawNote(context);
+	drawAllNote(context);
 	
 	drawCheckBar(context);
 	drawPadEffect(context);
