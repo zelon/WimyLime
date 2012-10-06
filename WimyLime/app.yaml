@@ -37,3 +37,36 @@ handlers:
   static_files: common.js
   upload: common.js
   
+- url: /images/note1.png
+  static_files: images/note1.png
+  upload: images/note1.png
+  
+- url: /images/note2.png
+  static_files: images/note2.png
+  upload: images/note2.png
+  
+- url: /images/note3.png
+  static_files: images/note3.png
+  upload: images/note3.png
+  
+- url: /images/note4.png
+  static_files: images/note4.png
+  upload: images/note4.png
+  
+- url: /images/note1pop.png
+  static_files: images/note1pop.png
+  upload: images/note1pop.png
+  
+- url: /images/note2pop.png
+  static_files: images/note2pop.png
+  upload: images/note2pop.png
+  
+- url: /images/note3pop.png
+  static_files: images/note3pop.png
+  upload: images/note3pop.png
+  
+- url: /images/note4pop.png
+  static_files: images/note4pop.png
+  upload: images/note4pop.png
+  
+
