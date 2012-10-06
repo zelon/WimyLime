@@ -60,6 +60,7 @@ google.setOnLoadCallback(_run);
   //    the player should play for six seconds and then stop.
   var done = false;
   function onPlayerStateChange(event) {
+	  return;
     if (event.data == YT.PlayerState.PLAYING && !done) {
       setTimeout(stopVideo, 6000);
       done = true;
@@ -67,4 +68,31 @@ google.setOnLoadCallback(_run);
   }
   function stopVideo() {
 	  g_youtubePlayer.stopVideo();
+  }
+  
+  
+  var g_lastYoutubeCurrentTimeUpdatedTime = 0;
+  var g_lastYoutubeCurrentTime = 0;
+
+  function getFixedYoutubeCurrentTime()
+  {
+  	var currentVideoTime = g_youtubePlayer.getCurrentTime();
+  	var fixedCurrentVideoTime = currentVideoTime; 
+  	var time = new Date();
+  	
+  	if ( g_lastYoutubeCurrentTime != currentVideoTime )
+  	{
+  		g_lastYoutubeCurrentTimeUpdatedTime = time.getTime();
+  		g_lastYoutubeCurrentTime = currentVideoTime;
+  	}
+  	else
+  	{
+  		if ( g_youtubePlayer.getPlayerState() != 2 /* paused */)
+  		{
+  			fixedCurrentVideoTime += ((time.getTime() - g_lastYoutubeCurrentTimeUpdatedTime) / 1000);
+  			fixedCurrentVideoTime = fixedCurrentVideoTime.toFixed(3); 
+  		}
+  	}
+  	
+  	return fixedCurrentVideoTime;
   }
