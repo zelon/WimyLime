@@ -109,7 +109,7 @@ function getFixedYoutbueCurrentTimeEx()
 		return "0.0";
 	}
 	
-	if ( g_youtubePlayer.getCurrentTime() <= 0.0 )
+	if ( g_youtubePlayer.getCurrentTime() <= 3.0 )
 	{
 		return "0.0";
 	}
@@ -122,7 +122,7 @@ function getFixedYoutbueCurrentTimeEx()
 		return g_youtubeStartedTime;
 	}
 	
-	var UTCDiff = (new Date()).getTime() - g_youtubeStartedTimeUTC;
+	var UTCDiff = ((new Date()).getTime() - g_youtubeStartedTimeUTC) / 1000.0;
 	
-	return g_youtubeStartedTime + (UTCDiff / 1000.0); 
+	return g_youtubeStartedTime + UTCDiff; 
 }
