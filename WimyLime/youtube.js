@@ -76,6 +76,8 @@ google.setOnLoadCallback(_run);
 
   function getFixedYoutubeCurrentTime()
   {
+	  return getFixedYoutbueCurrentTimeEx();
+	  
   	var currentVideoTime = g_youtubePlayer.getCurrentTime();
   	var fixedCurrentVideoTime = currentVideoTime; 
   	var time = new Date();
@@ -96,3 +98,31 @@ google.setOnLoadCallback(_run);
   	
   	return fixedCurrentVideoTime;
   }
+
+var g_youtubeStartedTime = 0;
+var g_youtubeStartedTimeUTC = 0;
+
+function getFixedYoutbueCurrentTimeEx()
+{
+	if ( g_youtubePlayer == null || g_youtubePlayer.getCurrentTime == null )
+	{
+		return "0.0";
+	}
+	
+	if ( g_youtubePlayer.getCurrentTime() <= 0.0 )
+	{
+		return "0.0";
+	}
+	
+	if ( g_youtubeStartedTime == 0 )
+	{
+		g_youtubeStartedTime = g_youtubePlayer.getCurrentTime();
+		g_youtubeStartedTimeUTC = (new Date()).getTime();
+		
+		return g_youtubeStartedTime;
+	}
+	
+	var UTCDiff = (new Date()).getTime() - g_youtubeStartedTimeUTC;
+	
+	return g_youtubeStartedTime + (UTCDiff / 1000.0); 
+}
