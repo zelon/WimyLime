@@ -33,29 +33,26 @@ function onGamePad4()
 {
 }
 
-function getShowingNotes()
+function getShowingNotes(notes)
 {
-	var notes = {pad1 : [ 8.661, 9.068, 9.461, 9.665, 10.268, 10.873, 11.242],pad2 : [ ],pad3 : [ ],pad4 : [ ],};
-	//var notes = {pad1 : [ 8.000, ],pad2 : [ 5.858, 5.858, 9.39, 9.831, 10.164, 10.361, 10.801, 11.007, 11.431, 11.608, 11.846, 12.042, 12.264, 18.696, 19.11, 19.492, 19.911, 20.114, 20.801, 21.204, 23.326, 24.129],pad3 : [ 9.614, 9.831, 10.164, 10.593, 10.801, 11.233, 11.431, 11.608, 12.042, 12.264, 12.466, 21.637, 23.507, 24.371, 188.533],pad4 : [ 22.055, 22.474, 22.663, 22.882, 23.946, 24.574, 25.003, 25.63, 25.63, 25.63, 25.63, 25.63, 25.63, 25.63, 25.63, 25.853, 25.853, 25.853, 25.853, 25.853, 26.053, 26.053, 26.053, 26.053, 26.053, 26.053, 26.269, 26.269, 26.269, 26.269, 26.269, 26.269, 26.269, 26.473, 26.473, 26.473, 26.473, 26.473, 26.473, 26.473, 26.7, 26.7, 26.7, 26.7, 26.7, 26.7, 26.926, 26.926, 26.926, 26.926, 26.926, 26.926, 27.113, 27.113, 27.113, 27.113, 27.113, 27.113, 27.113, 27.353, 27.353, 27.353, 27.353, 27.353, 27.353, 27.353, 27.547, 27.547, 27.547, 27.547, 27.547, 27.547, 27.786, 27.786, 27.786, 27.786, 27.786, 27.786, 27.786, 27.786, 28.011, 28.011, 28.011, 28.011, 28.011, 28.011, 28.011, 28.24, 28.24, 28.24, 28.24, 28.24, 28.24, 28.24, 28.466, 28.466, 28.466],};
-	
 	var currentVideoTime = g_youtubePlayer.getCurrentTime();
 	var bottomTime = currentVideoTime - NOTE_SHOWING_LENGTH;
 	var topTime = currentVideoTime + NOTE_SHOWING_LENGTH;
 	
 	var ret = [];
 	
-	for ( var i=0; i<notes.pad1.length; ++i)
+	for ( var i=0; i<notes.length; ++i)
 	{
-		if ( notes.pad1[i] >= bottomTime && notes.pad1[i] <= topTime )
+		if ( notes[i] >= bottomTime && notes[i] <= topTime )
 		{
-			ret.push(notes.pad1[i]);
+			ret.push(notes[i]);
 		}
 	}
 	
 	return ret;
 }
 
-function drawNote(context, img, centerX, centerY)
+function drawNoteImage(context, img, centerX, centerY)
 {
 	var centerOfImage = img.width / 2;
 	var tileUnitHeight = img.width;
@@ -66,27 +63,34 @@ function drawNote(context, img, centerX, centerY)
 	context.drawImage(img, 0, drawTileIndex * tileUnitHeight, img.width, tileUnitHeight, centerX - centerOfImage, centerY - centerOfImage, img.width, tileUnitHeight);
 }
 
+function drawNote(context, currentVideoTime, notes, loadedImage, x)
+{
+	var notes = getShowingNotes(notes);
+	
+	var SPEED = 1;
+	
+	for ( var i=0; i<notes.length; ++i )
+   	{
+		var y = (CANVAS_HEIGHT -  NOTE_TOUCH_CHECK_BAR_POSITION) - (( notes[i] - currentVideoTime ) * 200.0 * SPEED );
+		
+		if ( y >= (CANVAS_HEIGHT)) continue;
+		
+		drawNoteImage(context, loadedImage, x + CANVAS_WIDTH/4/2, y);
+	}
+}
+
 function drawAllNote(context)
 {
 	if ( g_youtubePlayer && g_youtubePlayer.getCurrentTime )
 	{
-		context.fillStyle = "rgb(150,150,150)";
-
 		var currentVideoTime = getFixedYoutubeCurrentTime();
-
-		var notes = getShowingNotes();
-			
-		var SPEED = 1;
+		var notes = {pad1 : [ 5.845, 6.056, 6.445, 6.858, 7.25, 7.652, 8.036, 8.269, 8.664, 9.056, 9.454, 9.84, 10.067, 10.453, 10.856, 11.253, 11.655, 12.068, 12.25, 12.657],pad2 : [ ],pad3 : [ ],pad4 : [ ],};
+		//var notes = {pad1 : [ 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0],pad2 : [ ],pad3 : [],pad4 : [],};
 		
-		for ( var i=0; i<notes.length; ++i )
-	   	{
-			var x = 0;
-			var y = (CANVAS_HEIGHT -  NOTE_TOUCH_CHECK_BAR_POSITION) - (( notes[i] - currentVideoTime ) * 200.0 * SPEED );
-			
-			if ( y >= (CANVAS_HEIGHT)) continue;
-			
-			drawNote(context, image_note1, 120/2, y);
-		}
+		drawNote(context, currentVideoTime, notes.pad1, image_note1, 0);
+		drawNote(context, currentVideoTime, notes.pad2, image_note2, 120);
+		drawNote(context, currentVideoTime, notes.pad3, image_note3, 240);
+		drawNote(context, currentVideoTime, notes.pad4, image_note4, 360);
 	}
 }
 
