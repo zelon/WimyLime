@@ -36,6 +36,59 @@ function onGamePad4()
 {
 }
 
+var animationObjects = [];
+
+function addTextAnimationObjects(x,y,msg, frame)
+{
+	var ani = {};
+	
+	ani.type = "text";
+	ani.x = x;
+	ani.y = y;
+	ani.msg = msg;
+	ani.remainFrames = frame;
+	ani.draw = function(context)
+	{
+		if ( this.remainFrames <= 0 ) return false;
+		
+		context.font = "italic bold 20px sans-serif";
+		context.fillStyle = "rgba(255,255,255, " + 1.0 * ( this.remainFrames / frame) + ")";
+		context.fillText(this.msg, this.x, this.y);
+		
+		context.strokeStyle = "rgba(0,0,0, " + 1.0 * ( this.remainFrames / frame) + ")";
+		context.strokeText(this.msg, this.x, this.y);
+		
+		this.remainFrames--;
+		
+		return true;
+	}
+	
+	animationObjects.push(ani);
+}
+
+function drawAnimationObjects(context)
+{
+	for ( var i=0; i<animationObjects.length; ++i )
+	{
+		if ( i == 0 && animationObjects[i] == null )
+		{
+			animationObjects.shift();
+			i = -1;
+			continue;
+		}
+		
+		if ( animationObjects[i] != null )
+		{
+			var ret = animationObjects[i].draw(context);
+			
+			if ( ret == false )
+			{
+				animationObjects[i] = null;
+			}
+		}
+	}
+}
+
 function drawNoteImage(context, img, centerX, centerY)
 {
 	var centerOfImage = img.width / 2;
@@ -62,7 +115,7 @@ function drawNote(context, currentVideoTime, notes, loadedImage, x)
 		
 		if ( y >= (CANVAS_HEIGHT)) ///< 화면 아래로 내려간 노트는 miss 를 표시하면서 노트 배열에서 삭제.
 		{
-			/// TODO : make miss object
+			addTextAnimationObjects(x, CANVAS_HEIGHT - NOTE_TOUCH_CHECK_BAR_POSITION + 2, "Miss", 20);
 			
 			notes.shift();
 			i = -1;
@@ -158,6 +211,7 @@ function draw()
 	
 	drawCheckBar(context);
 	drawPadEffect(context);
+	drawAnimationObjects(context);
 }
 
 startMainLoop(draw);
