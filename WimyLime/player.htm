@@ -55,7 +55,9 @@ function judge(notes, x)
 		notes.sort();
 		notes.shift();
 		
-		addTextAnimationObjects(x, CANVAS_HEIGHT - NOTE_TOUCH_CHECK_BAR_POSITION + 2, "Cool", 20);
+		var y = CANVAS_HEIGHT - NOTE_TOUCH_CHECK_BAR_POSITION;
+		addImageAnimationObjects(x, y, image_note1pop); 
+		addTextAnimationObjects(x, y + 2, "Cool", 20);
 	}
 }
 
@@ -80,6 +82,37 @@ function onGamePad4()
 }
 
 var animationObjects = [];
+
+function addImageAnimationObjects(x, y, img)
+{
+	var ani = {};
+	
+	ani.type = "text";
+	ani.x = x;
+	ani.y = y;
+	ani.img = img;
+	ani.remainFrames = img.height / img.width;
+	ani.accFrames = 0;
+	ani.draw = function(context)
+	{
+		if ( this.remainFrames <= 0 ) return false;
+
+		var centerOfImage = img.width / 2;
+		var tileUnitHeight = img.width;
+		var numberOfTile = img.height / tileUnitHeight;
+		
+		var drawTileIndex = this.accFrames;
+		
+		context.drawImage(img, 0, drawTileIndex * tileUnitHeight, img.width, tileUnitHeight, x - centerOfImage, y - centerOfImage, img.width, tileUnitHeight);
+
+		this.remainFrames--;
+		this.accFrames++;
+		
+		return true;
+	}
+	
+	animationObjects.push(ani);
+}
 
 function addTextAnimationObjects(x,y,msg, frame)
 {
