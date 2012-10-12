@@ -16,10 +16,21 @@ handlers:
 - url: /player.htm
   static_files: player.htm
   upload: player.htm
-  
+
+- url: /getVideoTitle.py
+  script: getVideoTitle.app
+
 - url: /style.css
   static_files: style.css
   upload: style.css
+
+- url: /util.js
+  static_files: util.js
+  upload: util.js
+  
+- url: /findImage.js
+  static_files: findImage.js
+  upload: findImage.js
   
 - url: /youtube.js
   static_files: youtube.js

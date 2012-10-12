@@ -6,7 +6,9 @@
 <link href="style.css" rel="stylesheet" type="text/css" />
 
 <script src="http://www.google.com/jsapi" type="text/javascript"></script>
+<script src="util.js" type="text/javascript"></script>
 <script src="common.js" type="text/javascript"></script>
+<script src="findImage.js"></script>
 
 <script type="text/javascript">
 var TOUCH_HEIGHT = 40.0;
@@ -290,11 +292,22 @@ function draw()
 	drawAnimationObjects(context);
 }
 
+request("/getVideoTitle.py?videoid=3fy4cqWMhyI",
+		function(responseJSON)
+		{
+			findImage(responseJSON["title"], function(result)
+					{
+						var body = document.getElementById("mainBody");
+						body.style.backgroundImage = "url('" + result + "')";
+						//body.style.opacity = 0.048;
+					});
+			
+		}, null);
 startMainLoop(draw);
       
 </script>
 </head>
-<body>
+<body id="mainBody">
 	<div id="allcontent">
 		<div id="videoDiv">Loading...</div>
 		<canvas id="mycanvas" width="480" height="400"></canvas>
