@@ -7,20 +7,11 @@ import logging
 from google.appengine.api import urlfetch
 from google.appengine.api import memcache
 
-#exceptWords = ["
-searchSite = "http://www.inmuz.com/"
-
-url = "undefined url"
-regTitle = "undefined reg"
-regArtist = "undefined reg"
-source = "unknown"
 defaultExpireSeconds = 60*60*48
 
 class MainPage(webapp2.RequestHandler):
     def get(self):
         self.response.headers['Content-Type'] = 'text/html; charset=UTF-8'
-        #self.response.headers['Content-Encoding'] = 'utf-8'
-        #self.response.out.write('startiing search...')
 
         self.searchLyrics(self.request.get("videoid"))
 
@@ -30,7 +21,6 @@ class MainPage(webapp2.RequestHandler):
         self.response.out.write(json.dumps(videoInfo))
     
     def searchLyrics(self, videoID):
-        #self.response.out.write("url : " + url)
         
         if videoID == "":
             self.response.out.write("no request".encode("utf-8"))
