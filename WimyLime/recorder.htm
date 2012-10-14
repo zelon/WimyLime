@@ -4,6 +4,7 @@
     <title>WimyLime Recorder</title>
     <link href="style.css" rel="stylesheet" type="text/css"/>
 
+    <script src="util.js"></script>
     <script src="common.js"></script>
     <script>
     var keytyped = false;
@@ -52,7 +53,7 @@
     
     function makeNote(key, arr)
     {
-		var note = key + " : [ ";
+		var note = "\"" + key + "\" : [ ";
 		
 		for ( var i=0; i<arr.length; ++i )
 		{
@@ -62,16 +63,21 @@
 			}
 			note += arr[i].toString();
 		}
-		note += "],";
+		
+		note += "]";
+		if ( key != "pad4" )
+		{
+			note += ",";
+		}
 		
 		return note;
     }
     
     function generateResult()
     {
-    	var logDiv = document.getElementById("result");
+    	var logDiv = document.getElementById("taOutput");
 
-    	var keylog = "notes = {";
+    	var keylog = "{";
     	
     	keylog += makeNote("pad1", notePad1);
     	keylog += makeNote("pad2", notePad2);
@@ -79,7 +85,7 @@
     	keylog += makeNote("pad4", notePad4);
     	
     	keylog += "}";
-    	logDiv.innerHTML = keylog;
+    	logDiv.value = keylog;
     }
 
     function draw()
@@ -99,6 +105,14 @@
     	}
     	
     	context.fillRect(0,0,CANVAS_WIDTH, CANVAS_HEIGHT);
+    }
+    
+    function fillData()
+    {
+    	var vars = getUrlVars();
+    	
+    	document.getElementById("videoid").value = getVideoID();
+    	document.getElementById("author").value = vars["author"];
     }
     
     startMainLoop(draw);
@@ -136,12 +150,28 @@
 	    
 	    <br />
 	    
+		<div >
+			<form action="insertLime.py" method="post">
+			<input type="hidden" name="videoid" id="videoid">
+			<input type="hidden" name="author" id="author">
+			<textarea  style="display:none;" id="taOutput" name="notes"></textarea>
+			<input type="submit" onclick="requestSubmit">
+			</form>
+		</div>
   	</div>
 
-    <div id="result"></div>
-    <div id="output"></div>
+    <div id="result" style="display:none;"></div>
+    <div id="output" style="display:none;"></div>
+
+	<script>
+    fillData();
+
+	</script>
 
     <script src="youtube.js" type="text/javascript"></script>
+    <script>
+    playYouTubeWhenReady(getVideoID());
+    </script>
   </body>
 </html>
 ​

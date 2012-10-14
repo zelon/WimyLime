@@ -17,8 +17,21 @@ handlers:
   static_files: player.htm
   upload: player.htm
 
+- url: /startRecord.htm
+  static_files: startRecord.htm
+  upload: startRecord.htm
+
 - url: /getVideoTitle.py
   script: getVideoTitle.app
+
+- url: /insertLime.py
+  script: DB.app
+
+- url: /listLime.py
+  script: DB.app
+
+- url: /loadLime.py
+  script: DB.app
 
 - url: /style.css
   static_files: style.css

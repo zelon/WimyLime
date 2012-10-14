@@ -233,5 +233,44 @@ function onTouchPadEnd4(e)
 	onKeyUp_V();
 }
 
+function extractVideoIDFromYouTubeURL(url)
+{
+    var vars = [], hash;
+    
+    /// url 중에서 첫번째 '?' 이후만 가져온다.
+    var findIndex = url.indexOf('?');
+    
+    if ( findIndex == -1 )
+    {
+    	return vars;
+    }
+    
+    var params = url.slice(findIndex + 1);
+    
+    /// GET 변수 중에 # 은 제거한다.
+    params = params.replace("#", "");
+    
+    /// '&' 을 기준으로 split 한다.
+    var hashes = params.split('&');
+    
+    for(var i = 0; i < hashes.length; i++)
+    {
+    	/// '=' 를 기준으로 key 와 value 를 나눈다.
+	    hash = hashes[i].split('=');
+	    vars.push(hash[0]);
+	    vars[hash[0]] = hash[1];
+    }
+    return vars["v"];
+}
+
+function getVideoID()
+{
+	var vars = getUrlVars();
+	
+	var videoURL = decodeURIComponent(vars["videoURL"]);
+	
+	return extractVideoIDFromYouTubeURL(videoURL);
+}
+
 document.onkeydown=onGameKeyDown;
 document.onkeyup=onGameKeyUp;

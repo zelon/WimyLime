@@ -37,17 +37,42 @@ google.setOnLoadCallback(_run);
 
   // 3. This function creates an <iframe> (and YouTube player)
   //    after the API code downloads.
-  var g_youtubePlayer;
-  function onYouTubeIframeAPIReady() {
+var g_youtubePlayer;
+var g_youtubeReady = false;
+var g_youtubeVideoID = "";
+
+function waitingYouTubeAndPlay()
+{
+	if ( g_youtubeReady == false )
+	{
+		setTimeout(waitingYouTubeAndPlay, 1000);
+		return;
+	}
+	
+	  var videoID = g_youtubeVideoID;
+	  
 	  g_youtubePlayer = new YT.Player('videoDiv', {
       width: '480',
       height: '300',
-      videoId: '3fy4cqWMhyI',
+      videoId: videoID,
       events: {
         'onReady': onPlayerReady,
         'onStateChange': onPlayerStateChange
       }
     });
+	
+}
+
+function playYouTubeWhenReady(videoid)
+{
+	g_youtubeVideoID = videoid;
+	
+	setTimeout(waitingYouTubeAndPlay, 1000);
+}
+  
+  function onYouTubeIframeAPIReady()
+  {
+	  g_youtubeReady = true;
   }
 
   // 4. The API will call this function when the video player is ready.
