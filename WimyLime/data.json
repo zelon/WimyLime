@@ -1,0 +1,14 @@
+sampleData =
+{
+	author = "zelon",
+	videoID = "3fy4cqWMhyI",
+	comment = "재미있게 즐겨주세요",
+
+	notes =
+	{
+		pad1 = [ 3, 5, 7 ],
+		pad2 = [ 3, 5, 7 ],
+		pad3 = [ 1, 2, 8 ],
+		pad4 = [ 1 ]
+	},
+};
