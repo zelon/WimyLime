@@ -54,8 +54,8 @@ handlers:
   upload: youtube.js
 
 - url: /recorder.js
-  static_files: youtube.js
-  upload: youtube.js
+  static_files: recorder.js
+  upload: recorder.js
 
 - url: /player.js
   static_files: youtube.js
