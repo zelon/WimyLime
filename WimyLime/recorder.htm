@@ -111,8 +111,21 @@
     {
     	var vars = getUrlVars();
     	
-    	document.getElementById("videoid").value = getVideoID();
-    	document.getElementById("author").value = vars["author"];
+    	var videoID = getVideoID();
+    	var author = vars["author"];
+    	
+    	$("videoid").value = videoID;
+    	$("author").value = author;
+    	$("show_author").innerHTML = author;
+		request("/getVideoTitle.py?videoid=" + videoID,
+				function(responseJSON)
+				{
+					var title = responseJSON["title"];
+					
+					$("videotitle").value = title;
+					$("show_title").innerHTML = title;
+				}, null);
+
     }
     
     startMainLoop(draw);
@@ -123,6 +136,12 @@
   </head>
   <body>
   	<div id="allcontent">
+  		<div>
+  			<p>
+  				<span id="show_title">타이틀 검색 중...</span><br />
+  				<span id="show_author">...</span>
+  			</p>
+  		</div>
 	    <div id="videoDiv">Loading...</div>
 	    <br />
 	    <canvas id="mycanvas" width="480" height="300"></canvas>
@@ -153,6 +172,7 @@
 		<div >
 			<form action="insertLime.py" method="post">
 			<input type="hidden" name="videoid" id="videoid">
+			<input type="hidden" name="videotitle" id="videotitle">
 			<input type="hidden" name="author" id="author">
 			<textarea  style="display:none;" id="taOutput" name="notes"></textarea>
 			<input type="submit" onclick="requestSubmit">

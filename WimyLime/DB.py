@@ -7,6 +7,7 @@ import json
 import traceback
 import sys
 import datetime
+import urllib
 import cgi
 
 from google.appengine.api import users
@@ -15,8 +16,10 @@ from google.appengine.ext import ndb
 class LimeData(ndb.Model):
     lime_index = ndb.IntegerProperty()
     videoid = ndb.StringProperty()
+    title = ndb.StringProperty()
     author = ndb.StringProperty()
     notes = ndb.StringProperty()
+    
     insert_time = ndb.DateTimeProperty(auto_now_add=True)
 
     @classmethod
@@ -46,13 +49,6 @@ class insertLime(webapp2.RequestHandler):
         newIndex = fetchResult[0].lime_index + 1 
         return newIndex, listCount
     
-    def insertNewList(self):
-        
-        
-        logging.info("Inserted new list")
-        
-        return newIndex, newName
-
     def post(self):
         
         args = self.request.arguments()
@@ -60,6 +56,7 @@ class insertLime(webapp2.RequestHandler):
         logging.info(args)
         
         videoid = self.request.get("videoid")
+        videotitle = self.request.get("videotitle")
         author = self.request.get("author")
         notes = self.request.get("notes")
         
@@ -67,7 +64,7 @@ class insertLime(webapp2.RequestHandler):
 
         logging.info("New lime_index : %d, listCount : %d" % (newIndex, listCount))
 
-        newLime = LimeData(lime_index = newIndex, author = author, videoid = videoid, notes = notes)
+        newLime = LimeData(lime_index = newIndex, author = author, videoid = videoid, title = videotitle, notes = notes)
         newLime.put()
         
         self.response.out.write("<html><body>ok : <a href='player.htm?lime_index=" + str(newIndex) + "'>Go to play</a></body></html>")
@@ -78,11 +75,27 @@ class listLime(webapp2.RequestHandler):
         
         videoid = self.request.get("videoid")
         
-        queryResult = LimeData.query_limedata(videoid)
+        if videoid == "":
+            queryResult = LimeData.query().order(LimeData.insert_time)
+            self.response.write("<p>List all Rhythm</p>")
+            logging.info("get all")
+        else:
+            self.response.write("<p>Find " + videoid + "</p>")
+            queryResult = LimeData.query_limedata(videoid).order(LimeData.insert_time)
         
-        
+        self.response.write("<p>")
         for list in queryResult.iter():
-            self.response.write("<a href='player.htm?lime_index=" + str(list.lime_index) + "'>" + str(list.lime_index) +" : " + list.author + "<a/><br/>")
+            logging.info(u"title : " + unicode(str(list.title), "utf-8") )
+            logging.info("author : " + list.author)
+            self.response.write(u"<a href='player.htm?lime_index="
+                                 + str(list.lime_index)
+                                 + "'>" + unicode(str(list.title), "utf-8")
+                                  +" : " + list.author + "<a/><br/>")
+        self.response.write("</p>")
+            
+        logging.info("End of list")
+            
+        
         
 
 class loadLime(webapp2.RequestHandler):
