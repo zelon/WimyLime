@@ -6,154 +6,9 @@
 
     <script src="util.js"></script>
     <script src="common.js"></script>
-    <script>
-    var keytyped = false;
-    var keylog = "";
-    
-    var notePad1 = [];
-    var notePad2 = [];
-    var notePad3 = [];
-    var notePad4 = [];
-    
-    function getCurrentYoutubeTimeString()
-    {
-    	if ( g_youtubePlayer == null )
-    	{
-        	return 0.0;
-    	}
-    	else
-    	{
-        	return getFixedYoutubeCurrentTime();
-    	}
-    }
-    
-    function onGamePad1()
-    {
-    	notePad1.push(getCurrentYoutubeTimeString());
-    	generateResult();
-    }
-    
-    function onGamePad2()
-    {
-    	notePad2.push(getCurrentYoutubeTimeString());
-    	generateResult();
-    }
-    
-    function onGamePad3()
-    {
-    	notePad3.push(getCurrentYoutubeTimeString());
-    	generateResult();
-    }
-    
-    function onGamePad4()
-    {
-    	notePad4.push(getCurrentYoutubeTimeString());
-    	generateResult();
-    }
-    
-    function makeNote(key, arr)
-    {
-		var note = "\"" + key + "\" : [ ";
-		
-		for ( var i=0; i<arr.length; ++i )
-		{
-			if ( i != 0 )
-			{
-				note += ", ";
-			}
-			note += arr[i].toString();
-		}
-		
-		note += "]";
-		if ( key != "pad4" )
-		{
-			note += ",";
-		}
-		
-		return note;
-    }
-    
-    function generateResult()
-    {
-    	var logDiv = document.getElementById("taOutput");
-
-    	var keylog = "{";
-    	
-    	keylog += makeNote("pad1", notePad1);
-    	keylog += makeNote("pad2", notePad2);
-    	keylog += makeNote("pad3", notePad3);
-    	keylog += makeNote("pad4", notePad4);
-    	
-    	keylog += "}";
-    	logDiv.value = keylog;
-    }
-
-    function drawStatusMsg(context)
-    {
-		context.font = "italic bold 20px sans-serif";
-		context.fillStyle = "rgb(255,255,255)";
-
-		var text = "Z,X,C,V 키를 통해 리듬을 입력하세요";
-		
-		var currentTime = getCurrentYoutubeTimeString(); 
-		if ( currentTime == "0.0" )
-    	{
-    		text = "시작 후 " + g_youtubeMinimumStartSecond + " 초 후부터 입력 가능합니다";
-    	}
-		
-		var x = (CANVAS_WIDTH - context.measureText(text).width) / 2;
-		
-		
-		context.fillText(text, x, 50);
-    }
-    
-    function draw()
-    {
-    	var canvas = document.getElementById("mycanvas");
-    	
-    	if ( canvas == null ) return;
-    	var context = canvas.getContext("2d");
-    	
-    	context.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-    	context.fillStyle = "rgb(150,150,150)";
-    	
-    	if ( keytyped )
-    	{
-    		context.fillStyle = "rgb(255,255,255)";
-    		keytyped = false;
-    	}
-    	
-    	context.fillRect(0,0,CANVAS_WIDTH, CANVAS_HEIGHT);
-    	
-    	drawStatusMsg(context);
-    }
-    
-    function fillData()
-    {
-    	var vars = getUrlVars();
-    	
-    	var videoID = getVideoID();
-    	var author = vars["author"];
-    	
-    	$("videoid").value = videoID;
-    	$("author").value = author;
-    	$("show_author").innerHTML = author;
-		request("/getVideoTitle.py?videoid=" + videoID,
-				function(responseJSON)
-				{
-					var title = responseJSON["title"];
-					
-					$("videotitle").value = title;
-					$("show_title").innerHTML = title;
-				}, null);
-
-    }
-    
-    startMainLoop(draw);
-    </script>
     
     <script src="http://www.google.com/jsapi" type="text/javascript"></script>
-    <script src="recorder.js" type="text/javascript"></script>
+    <script src="recorder.js"></script>
   </head>
   <body>
   	<div id="allcontent">
@@ -195,7 +50,7 @@
 			<input type="hidden" name="videoid" id="videoid">
 			<input type="hidden" name="videotitle" id="videotitle">
 			<input type="hidden" name="author" id="author">
-			<input type="submit" onclick="requestSubmit" style="width:400px; height:100px;">
+			<input type="submit" onclick="requestSubmit" value="입력 완료" style="width:400px; height:100px;">
 			<br />
 			<textarea  style="width:400px; height:800px; /*display:none;*/" id="taOutput" name="notes"></textarea>
 			</form>
@@ -204,11 +59,6 @@
 
     <div id="result" style="display:none;"></div>
     <div id="output" style="display:none;"></div>
-
-	<script>
-    fillData();
-
-	</script>
 
     <script src="youtube.js" type="text/javascript"></script>
     <script>
