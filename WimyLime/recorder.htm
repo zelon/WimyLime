@@ -88,6 +88,25 @@
     	logDiv.value = keylog;
     }
 
+    function drawStatusMsg(context)
+    {
+		context.font = "italic bold 20px sans-serif";
+		context.fillStyle = "rgb(255,255,255)";
+
+		var text = "Z,X,C,V 키를 통해 리듬을 입력하세요";
+		
+		var currentTime = getCurrentYoutubeTimeString(); 
+		if ( currentTime == "0.0" )
+    	{
+    		text = "시작 후 " + g_youtubeMinimumStartSecond + " 초 후부터 입력 가능합니다";
+    	}
+		
+		var x = (CANVAS_WIDTH - context.measureText(text).width) / 2;
+		
+		
+		context.fillText(text, x, 50);
+    }
+    
     function draw()
     {
     	var canvas = document.getElementById("mycanvas");
@@ -105,6 +124,8 @@
     	}
     	
     	context.fillRect(0,0,CANVAS_WIDTH, CANVAS_HEIGHT);
+    	
+    	drawStatusMsg(context);
     }
     
     function fillData()
@@ -169,13 +190,14 @@
 	    
 	    <br />
 	    
-		<div >
+		<div id="submitForm">
 			<form action="insertLime.py" method="post">
 			<input type="hidden" name="videoid" id="videoid">
 			<input type="hidden" name="videotitle" id="videotitle">
 			<input type="hidden" name="author" id="author">
-			<textarea  style="display:none;" id="taOutput" name="notes"></textarea>
-			<input type="submit" onclick="requestSubmit">
+			<input type="submit" onclick="requestSubmit" style="width:400px; height:100px;">
+			<br />
+			<textarea  style="width:400px; height:800px; /*display:none;*/" id="taOutput" name="notes"></textarea>
 			</form>
 		</div>
   	</div>

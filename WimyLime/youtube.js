@@ -126,6 +126,7 @@ function playYouTubeWhenReady(videoid)
 
 var g_youtubeStartedTime = 0;
 var g_youtubeStartedTimeUTC = 0;
+const g_youtubeMinimumStartSecond = 3;
 
 function getFixedYoutbueCurrentTimeEx()
 {
@@ -134,7 +135,7 @@ function getFixedYoutbueCurrentTimeEx()
 		return "0.0";
 	}
 	
-	if ( g_youtubePlayer.getCurrentTime() <= 3.0 )
+	if ( g_youtubePlayer.getCurrentTime() <= g_youtubeMinimumStartSecond )
 	{
 		return "0.0";
 	}
