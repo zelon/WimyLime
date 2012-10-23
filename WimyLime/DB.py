@@ -67,7 +67,7 @@ class insertLime(webapp2.RequestHandler):
         newLime = LimeData(lime_index = newIndex, author = author, videoid = videoid, title = videotitle, notes = notes)
         newLime.put()
         
-        self.response.out.write("<html><body>ok : <a href='player.htm?lime_index=" + str(newIndex) + "'>Go to play</a></body></html>")
+        self.response.out.write("<html><body>ok : <a href='player.htm?lime_index=" + str(newIndex) + "'>Go to play</a><br /><a href='list.htm'>List limes</a></body></html>")
 
 class listLime(webapp2.RequestHandler):
     
@@ -77,26 +77,22 @@ class listLime(webapp2.RequestHandler):
         
         if videoid == "":
             queryResult = LimeData.query().order(LimeData.insert_time)
-            self.response.write("<p>List all Rhythm</p>")
             logging.info("get all")
         else:
-            self.response.write("<p>Find " + videoid + "</p>")
             queryResult = LimeData.query_limedata(videoid).order(LimeData.insert_time)
         
-        self.response.write("<p>")
+        result = []
+        
         for list in queryResult.iter():
-            logging.info(u"title : " + unicode(str(list.title), "utf-8") )
-            logging.info("author : " + list.author)
-            self.response.write(u"<a href='player.htm?lime_index="
-                                 + str(list.lime_index)
-                                 + "'>" + unicode(str(list.title), "utf-8")
-                                  +" : " + list.author + "<a/><br/>")
-        self.response.write("</p>")
             
-        logging.info("End of list")
+            thisItem = {}
+            thisItem["index"] = list.lime_index
+            thisItem["title"] = list.title
+            thisItem["author"] = list.author
             
-        
-        
+            result.append(thisItem)
+            
+        self.response.write(json.dumps(result))
 
 class loadLime(webapp2.RequestHandler):
     

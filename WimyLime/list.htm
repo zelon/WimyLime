@@ -1,0 +1,44 @@
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, user-scalable=no" />
+	<title>WimeLime - Rhythm Action with YouTube</title>
+	
+	<script src="util.js"></script>
+</head>
+<body>
+	<div id="list_table">
+	</div>
+<script>
+function requestList()
+{
+	request("/listLime.py",
+		function(responseJSON)
+		{
+			result = "<table>";
+			result += "<tr>";
+				result += "<th>제목</th><th>리듬 만든 이</th>";
+			result += "</tr>";
+			for ( var i=0; i<responseJSON.length; ++i )
+			{
+				item = responseJSON[i];
+
+				result += "<tr>";
+				result += "<td><a href='player.htm?lime_index=" + item.index + "'>" + item.title + "</td>";
+				result += "<td>" + item.author + "</td>";
+   				result += "</tr>";
+
+			}
+			result += "</table>";
+			
+			$("list_table").innerHTML = result;
+		}
+	)
+}
+
+requestList();
+
+</script>
+
+</body>
+</html>
