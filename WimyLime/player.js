@@ -54,6 +54,30 @@ function findClosestNoteIndex(notes)
 	return minIndex;
 }
 
+var combo = 0;
+const MINIMUM_COMBO = 5;
+
+function onHitNote()
+{
+	++combo;
+	
+	if ( combo >= MINIMUM_COMBO )
+	{
+		var text = combo.toString() + " combo";
+		
+		mainContext.font = "italic bold 20px sans-serif";
+
+		var width = mainContext.measureText(text).width;
+		var x = ( CANVAS_WIDTH - width ) / 2;
+		addTextAnimationObjects(x,100, text, 20);
+	}
+}
+
+function onMissNote()
+{
+	combo = 0;
+}
+
 function judge(notes, x)
 {
 	var index = findClosestNoteIndex(notes);
@@ -67,6 +91,8 @@ function judge(notes, x)
 		var y = CANVAS_HEIGHT - NOTE_TOUCH_CHECK_BAR_POSITION;
 		addImageAnimationObjects(x, y, image_note1pop); 
 		addTextAnimationObjects(x, y + 2, "Cool", 20);
+		
+		onHitNote();
 	}
 }
 
@@ -279,13 +305,16 @@ function drawCheckBar(context)
 	context.fillRect(0, CANVAS_HEIGHT - NOTE_TOUCH_CHECK_BAR_POSITION, CANVAS_WIDTH, 2);
 }
 
+var mainContext = null;
 function draw()
 {
 	var canvas = document.getElementById("mycanvas");
 	
 	if ( canvas == null ) return;
 	
+	
 	var context = canvas.getContext("2d");
+	mainContext = context;
 
 	drawBackground(context);
 	
