@@ -34,7 +34,11 @@ function loadData()
 				scoreData["totalNotes"] = countNotes(notes);
 				
 				videoid = responseJSON["videoid"];
-				end_second = responseJSON["end_second"];
+				
+				if  ( responseJSON["end_second"] != null )
+				{
+					end_second = responseJSON["end_second"];
+				}
 				
 				requestBackgroundImage(videoid);
 				
