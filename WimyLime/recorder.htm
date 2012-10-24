@@ -46,11 +46,12 @@
 	    <br />
 	    
 		<div id="submitForm">
-			<form action="insertLime.py" method="post">
+			<form action="insertLime.py" method="post" onsubmit="return onRequestSubmit();">
 			<input type="hidden" name="videoid" id="videoid">
 			<input type="hidden" name="videotitle" id="videotitle">
 			<input type="hidden" name="author" id="author">
-			<input type="submit" onclick="requestSubmit" value="입력 완료" style="width:400px; height:100px;">
+			<input type="hidden" name="end_second" id="end_second">
+			<input type="submit" value="입력 완료" style="width:400px; height:100px;">
 			<br />
 			<textarea  style="width:400px; height:800px; /*display:none;*/" id="taOutput" name="notes"></textarea>
 			</form>

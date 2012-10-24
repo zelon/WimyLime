@@ -19,6 +19,7 @@ class LimeData(ndb.Model):
     title = ndb.StringProperty()
     author = ndb.StringProperty()
     notes = ndb.StringProperty()
+    end_second = ndb.StringProperty()
     
     insert_time = ndb.DateTimeProperty(auto_now_add=True)
 
@@ -59,12 +60,13 @@ class insertLime(webapp2.RequestHandler):
         videotitle = self.request.get("videotitle")
         author = self.request.get("author")
         notes = self.request.get("notes")
+        end_second = self.request.get("end_second")
         
         newIndex, listCount = self.getNewIndex()
 
         logging.info("New lime_index : %d, listCount : %d" % (newIndex, listCount))
 
-        newLime = LimeData(lime_index = newIndex, author = author, videoid = videoid, title = videotitle, notes = notes)
+        newLime = LimeData(lime_index = newIndex, author = author, videoid = videoid, title = videotitle, notes = notes, end_second = end_second)
         newLime.put()
         
         self.response.out.write("<html><body>ok : <a href='player.htm?lime_index=" + str(newIndex) + "'>Go to play</a><br /><a href='list.htm'>List limes</a></body></html>")
@@ -108,6 +110,7 @@ class loadLime(webapp2.RequestHandler):
             #self.response.write(list.notes + "<br/>")
             result["notes"] = list.notes
             result["videoid"] = list.videoid
+            result["end_second"] = list.end_second
             break
         
         self.response.write(json.dumps(result))

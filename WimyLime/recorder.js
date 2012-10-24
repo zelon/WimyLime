@@ -149,3 +149,11 @@ function fillData()
 
 }
 
+function onRequestSubmit()
+{
+	var currentTime = getCurrentYoutubeTimeString();
+	
+	$("end_second").value = currentTime;
+	
+	return true;
+}
