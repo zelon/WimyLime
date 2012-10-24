@@ -21,6 +21,10 @@ handlers:
   static_files: player.htm
   upload: player.htm
 
+- url: /player.js
+  static_files: player.js
+  upload: player.js
+
 - url: /startRecord.htm
   static_files: startRecord.htm
   upload: startRecord.htm
