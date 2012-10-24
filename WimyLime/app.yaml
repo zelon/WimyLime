@@ -32,6 +32,9 @@ handlers:
 - url: /getVideoTitle.py
   script: getVideoTitle.app
 
+- url: /score.py
+  script: score.app
+
 - url: /insertLime.py
   script: DB.app
 

@@ -9,13 +9,30 @@ var NOTE_TOUCH_CHECK_BAR_POSITION = 20.0;
 
 var notes = {pad1 : [ 5.738, 6.115, 6.488, 6.856000000000001, 7.2250000000000005, 7.57, 7.905, 8.233, 20.397000000000002, 20.708000000000002, 21.024, 21.367, 21.726, 22.065, 22.439, 22.819, 23.516, 24.278, 25.037, 25.74, 26.456, 30.526, 31.221, 31.361, 31.506, 31.643, 31.78, 31.925, 35.219, 37.699, 38.499, 39.258, 39.956, 40.7, 41.405, 42.129, 42.915, 58.472, 59.226, 59.921, 60.589999999999996, 61.378, 63.947, 64.629, 66.86, 67.895, 68.644, 69.399],pad2 : [ 8.634, 8.971, 9.338000000000001, 9.752, 10.118, 10.488, 10.809000000000001, 11.233, 11.608, 12, 12.339, 12.705, 13.038, 13.392, 13.715, 14.115000000000002, 26.122, 26.8, 27.907, 35.988, 43.592999999999996, 45.058, 46.497, 47.205, 47.929, 48.664, 55.211999999999996, 56.635, 58.103, 58.861, 59.611, 60.274, 62.136, 65.36800000000001, 65.732, 65.914, 66.128, 66.322, 66.529, 67.57600000000001, 68.284, 68.979],pad3 : [ 18.79, 27.598, 28.294999999999998, 29.427, 36.67, 46.822, 47.564, 48.328, 49.047, 52.627, 53.397999999999996, 54.1, 54.809, 62.869, 65.561, 65.855, 66.036, 66.235, 66.434, 69.804, 70.845, 71.56099999999999, 72.292],pad4 : [ 14.474, 14.839000000000002, 15.165, 15.536000000000001, 15.881, 16.243000000000002, 16.581, 17.026, 17.393, 17.737000000000002, 18.086000000000002, 18.424, 29.081, 29.724999999999998, 30.854, 37.356, 49.422, 50.9, 52.278999999999996, 52.946, 53.738, 54.455, 63.557, 64.272, 64.967, 70.521, 71.175, 71.887],};
 var end_second = 99999;
+var lime_index = -1;
+
+var scoreData = {};
+
+function countNotes(notes)
+{
+	return notes.pad1.length + notes.pad2.length + notes.pad3.length + notes.pad4.length;
+}
 
 function loadData()
 {
-	request("/loadLime.py?lime_index=" + getUrlVars()["lime_index"],
+	scoreData["miss"] = 0;
+	scoreData["maxCombo"] = 0;
+	scoreData["totalNotes"] = 0;
+	
+	lime_index = getUrlVars()["lime_index"];
+
+	request("/loadLime.py?lime_index=" + lime_index,
 			function(responseJSON)
 			{
 				notes = JSON.parse( responseJSON["notes"] );
+				
+				scoreData["totalNotes"] = countNotes(notes);
+				
 				videoid = responseJSON["videoid"];
 				end_second = responseJSON["end_second"];
 				
@@ -66,7 +83,18 @@ function onHitNote()
 	
 	if ( combo >= MINIMUM_COMBO )
 	{
-		var text = combo.toString() + " combo";
+		var max = false;
+		
+		if ( scoreData["maxCombo"] < combo )
+		{
+			scoreData["maxCombo"] = combo;
+			max = true;
+		}
+		
+		var text = combo.toString();
+		
+		if ( max ) text += " max ";
+		text += " combo";
 		
 		mainContext.font = "italic bold 20px sans-serif";
 
@@ -79,6 +107,8 @@ function onHitNote()
 function onMissNote()
 {
 	combo = 0;
+	
+	scoreData["miss"]++;
 }
 
 function judge(notes, x)
@@ -241,9 +271,26 @@ function drawNote(context, currentVideoTime, notes, loadedImage, x)
 	}
 }
 
+function post_to_url(path, params, method)
+{
+    method = method || "post";
+    var form = document.createElement("form");
+    form.setAttribute("method", method);
+    form.setAttribute("action", path);
+    for(var key in params)
+    {
+        var hiddenField = document.createElement("input");
+        hiddenField.setAttribute("type", "hidden");
+        hiddenField.setAttribute("name", key);
+        hiddenField.setAttribute("value", params[key]);
+        form.appendChild(hiddenField);
+    }
+    document.body.appendChild(form);
+    form.submit();
+}
 function moveToScorePage()
 {
-	alert("end");
+	post_to_url("/score.py", { "totalNotes" : scoreData["totalNotes"], "maxCombo" : scoreData["maxCombo"], "miss" : scoreData["miss"], "lime_index" : lime_index });
 }
 
 var moving = false;
