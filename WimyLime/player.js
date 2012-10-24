@@ -231,6 +231,8 @@ function drawNote(context, currentVideoTime, notes, loadedImage, x)
 			
 			notes.shift();
 			i = -1;
+			
+			onMissNote();
 		}
 		else
 		{
