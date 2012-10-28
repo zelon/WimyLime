@@ -275,26 +275,16 @@ function drawNote(context, currentVideoTime, notes, loadedImage, x)
 	}
 }
 
-function post_to_url(path, params, method)
-{
-    method = method || "post";
-    var form = document.createElement("form");
-    form.setAttribute("method", method);
-    form.setAttribute("action", path);
-    for(var key in params)
-    {
-        var hiddenField = document.createElement("input");
-        hiddenField.setAttribute("type", "hidden");
-        hiddenField.setAttribute("name", key);
-        hiddenField.setAttribute("value", params[key]);
-        form.appendChild(hiddenField);
-    }
-    document.body.appendChild(form);
-    form.submit();
-}
 function moveToScorePage()
 {
-	post_to_url("/score.py", { "totalNotes" : scoreData["totalNotes"], "maxCombo" : scoreData["maxCombo"], "miss" : scoreData["miss"], "lime_index" : lime_index });
+	post_to_url("/score.py",
+		{
+			"totalNotes" : scoreData["totalNotes"],
+			"maxCombo" : scoreData["maxCombo"],
+			"miss" : scoreData["miss"],
+			"lime_index" : lime_index
+		}
+	);
 }
 
 var moving = false;
