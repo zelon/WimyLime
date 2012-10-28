@@ -1,68 +1,86 @@
 <html>
-<body>
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<script src="util.js"></script>
+	<script src="common.js"></script>
+	<link href="style.css" rel="stylesheet" type="text/css" />
 </head>
-<div style="width:470px; margin-left:auto; margin-right:auto;">
-	<p>아래의 칸을 채우고 '입력 시작' 버튼을 누르면 입력 화면으로 이동합니다. 입력은 Z,X,C,V 4개의 버튼으로 이루어집니다.
-	</p>
-	<form action="recorder.htm" method="get" onsubmit="return checkForm()">
-	<table>
-		<tr>
-			<td>비디오 주소</td>
-			<td><input type="text" name="videoURL" id="videoURL" onchange="checkTitle()"></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td><span id="status"></span></td>
-		</tr>
-		<tr>
-			<td>리듬 만든 이</td>
-			<td><input type="text" name="author" id="author"></td>
-		</tr>
-		<tr>
-			<script src="util.js"></script>
-			<script src="common.js"></script>
-			<script>
-			function checkTitle()
-			{
-				$("status").innerHTML = "비디오 제목 얻어오는 중...";
-				request("/getVideoTitle.py?videoid=" + extractVideoIDFromYouTubeURL($("videoURL").value),
-						function(responseJSON)
+<body id="whitebody">
+
+	<br />
+	<div id="indexmain">
+		<div id="main_head">
+			WimyLime
+		</div>
+		<div id="main_inner">
+
+			<div style="width:470px; margin-left:auto; margin-right:auto;">
+				<p>아래의 칸을 채우고 '입력 시작' 버튼을 누르세요
+				</p>
+				<form action="recorder.htm" method="get" onsubmit="return checkForm()">
+				<table width="90%" align="center">
+					<tr>
+						<td>비디오 주소 : </td>
+						<td><input type="text" size="45" name="videoURL" id="videoURL" onchange="checkTitle()" required="required"></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><span id="status"></span></td>
+					</tr>
+					<tr>
+						<td>리듬 만든 이 : </td>
+						<td><input type="text" name="author" id="author" required="required"></td>
+					</tr>
+					<tr>
+						<script>
+						function checkTitle()
 						{
-							$("status").innerHTML = responseJSON["title"];
-						}, null);
-			}
-			
-			function checkFormAndAlertAndFocus(id, msg)
-			{
-				if ( $(id).value == "" )
-				{
-					alert(msg);
-					$(id).focus();
-					return false;
-				}
-				return true;
-			}
-			function checkForm()
-			{
-				if ( false == checkFormAndAlertAndFocus("videoURL", "비디오 주소를 입력하세요") )
-				{
-					return false;
-				}
-				if ( false == checkFormAndAlertAndFocus("author", "리듬 만든 이를 입력하세요") )
-				{
-					return false;
-				}
-				return true;
-			}
-			</script>
-			<td colspan="2" align="right"><input type="submit" value="입력 시작" ></td>
-		</tr>
-	</table>
-	
-	ex) http://www.youtube.com/watch?v=3fy4cqWMhyI
-	</form>
-</div>
+							$("status").innerHTML = "비디오 제목 얻어오는 중...";
+							request("/getVideoTitle.py?videoid=" + extractVideoIDFromYouTubeURL($("videoURL").value),
+									function(responseJSON)
+									{
+										$("status").innerHTML = responseJSON["title"];
+									}, null);
+						}
+						
+						function checkFormAndAlertAndFocus(id, msg)
+						{
+							if ( $(id).value == "" )
+							{
+								alert(msg);
+								$(id).focus();
+								return false;
+							}
+							return true;
+						}
+						function checkForm()
+						{
+							if ( false == checkFormAndAlertAndFocus("videoURL", "비디오 주소를 입력하세요") )
+							{
+								return false;
+							}
+							if ( false == checkFormAndAlertAndFocus("author", "리듬 만든 이를 입력하세요") )
+							{
+								return false;
+							}
+							return true;
+						}
+						</script>
+						<td colspan="2" align="center"><input type="submit" value="입력 시작" size="40" class="fullSizeButton"></td>
+					</tr>
+				</table>
+				<br />
+				ex) http://www.youtube.com/watch?v=3fy4cqWMhyI
+				</form>
+			</div>
+
+		</div>
+	</div>
+	<br />
+	<div id="footer">
+	Made by zelon
+	</div>
+
+
 </body>
 </html>

@@ -122,6 +122,25 @@ body
 	color:black;
 }
 
+td
+{
+	color:black;
+}
+
+input
+{
+	border: 1px solid #aaaaaa;
+}
+
+.fullSizeButton
+{
+	width: 450px;
+	height: 60px;
+	margin: 0px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
 #lime_table
 {
 	border: 1px #eeeeee solid;
