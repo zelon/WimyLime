@@ -103,5 +103,12 @@ handlers:
 - url: /images/note4pop.png
   static_files: images/note4pop.png
   upload: images/note4pop.png
-  
+
+- url: /images/lime.png
+  static_files: images/lime.png
+  upload: images/lime.png
+
+- url: /favicon.ico
+  static_files: images/favicon.ico
+  upload: images/favicon.ico  
 
