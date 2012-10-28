@@ -83,3 +83,57 @@ body
 	
 }
 
+#whitebody
+{
+	background-color: white;
+}
+#indexmain
+{
+	border: 1px #eeeeee solid;
+	border-radius: 5px 5px 5px 5px;
+	
+	width: 480px;
+	margin: 0px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#main_logo
+{
+	width: 15px;
+	height: 15px;
+}
+
+#main_head
+{
+	border-radius: 5px 5px 0px 0px;
+
+	height: 20px;
+	color: white;
+	font-weight: bold;
+	background-color: #aea79f;
+	padding: 5px;
+}
+
+#main_inner
+{
+	width: 480px;
+	text-align: center;
+	color:black;
+}
+
+#lime_table
+{
+	border: 1px #eeeeee solid;
+}
+
+#footer
+{
+	text-align: center;
+	font-size: 70%;
+	color: black;
+	width: 480px;
+	margin: 0px;
+	margin-left: auto;
+	margin-right: auto;
+}

@@ -3,9 +3,76 @@
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, user-scalable=no" />
 	<title>WimeLime - Rhythm Action with YouTube</title>
+	
+	<script src="util.js"></script>
+	
+	<link href="style.css" rel="stylesheet" type="text/css" />
 </head>
-<body>
-<p><a href="startRecord.htm">리듬 만들기</a></p>
-<p><a href="list.htm">만들어진 리듬 플레이하기</a></p>
+<body id="whitebody">
+	<br />
+	<div id="indexmain">
+		<div id="main_head">
+			WimyLime v1.0
+			<img src="/images/lime.png" id="main_logo" />
+		</div>
+		<div id="main_inner">
+			<p><a href="startRecord.htm">+ 새로운 리듬 만들기</a></p>
+			<br />
+			<table id="lime_table" width="90%" align="center">
+				<tr>
+					<th colspan="2" style="color:black;">리듬 플레이하기</th>
+				</tr>
+				<tr>
+					<td width="100%" colspan="2" align="center"><div id="list_table" style="text-align:center;">Loading...</div></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td style="text-align: right;"><a href="list.htm">전체 보기 >></a></td>
+				</tr>
+			</table>
+			
+			
+		</div>
+	</div>
+	<br />
+	<div id="footer">
+	Made by zelon
+	</div>
+	
+	
+	<script>
+	function requestList()
+	{
+		request("/listLime.py",
+			function(responseJSON)
+			{
+				result = "<table width='100%'>";
+				result += "<tr>";
+					result += "<th>제목</th><th>리듬 만든 이</th>";
+				result += "</tr>";
+				for ( var i=0; i<responseJSON.length; ++i )
+				{
+					item = responseJSON[i];
+	
+					result += "<tr>";
+					result += "<td align='center'><a href='player.htm?lime_index=" + item.index + "'>" + item.title + "</td>";
+					result += "<td>" + item.author + "</td>";
+	   				result += "</tr>";
+	
+	   				if ( i == 5 )
+	   				{
+	   					break;///< 첫 화면에서는 최대 5개만 보여준다.
+	   				}
+				}
+				result += "</table>";
+				
+				$("list_table").innerHTML = result;
+			}
+		)
+	}
+	
+	requestList();
+	</script>
+
 </body>
 </html>
