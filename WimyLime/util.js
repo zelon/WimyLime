@@ -1,4 +1,14 @@
 
+function trim(str)
+{
+    return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+}
+
+String.prototype.trim = function()
+{
+    return this.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+}
+
 function $(id)
 {
 	return document.getElementById(id);
