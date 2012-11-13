@@ -32,8 +32,6 @@ hr
 	margin-right : auto;
 
 	border: 0px;
-	
-	background-color: red;
 }
 
 #mycanvas
@@ -184,7 +182,7 @@ input
 {
 	width: 450px;
 	height: 60px;
-	margin: 0px;
+	margin: 30px;
 	margin-left: auto;
 	margin-right: auto;
 }
