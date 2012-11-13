@@ -90,7 +90,7 @@ function generateResult()
 
 function drawStatusMsg(context)
 {
-	context.font = "italic bold 20px sans-serif";
+	context.font = GAME_STATUS_FONT;
 	context.fillStyle = "rgb(255,255,255)";
 
 	var text = "Z,X,C,V 키를 통해 리듬을 입력하세요";
@@ -126,6 +126,8 @@ function draw()
 	context.fillRect(0,0,CANVAS_WIDTH, CANVAS_HEIGHT);
 	
 	drawStatusMsg(context);
+	drawPadEffect(context);
+	drawAnimationObjects(context);
 }
 
 function fillData()

@@ -9,6 +9,9 @@ var KEYCODE_V = 86;
 
 var FPS = 30;
 
+const GAME_JUDGE_FONT = "italic bold 20px sans-serif";
+const GAME_STATUS_FONT = "italic bold 20px sans-serif";
+
 function startLoop()
 {
 	setInterval(mainFrameFunction, 1000/FPS);
@@ -287,6 +290,128 @@ function requestBackgroundImage(videoid)
 						});
 				
 			}, null);
+}
+
+
+var animationObjects = [];
+
+function addImageAnimationObjects(x, y, img)
+{
+	var ani = {};
+	
+	ani.type = "text";
+	ani.x = x;
+	ani.y = y;
+	ani.img = img;
+	ani.remainFrames = img.height / img.width;
+	ani.accFrames = 0;
+	ani.draw = function(context)
+	{
+		if ( this.remainFrames <= 0 ) return false;
+
+		var centerOfImage = img.width / 2;
+		var tileUnitHeight = img.width;
+		var drawTileIndex = this.accFrames;
+		
+		context.drawImage(img, 0, drawTileIndex * tileUnitHeight, img.width, tileUnitHeight, x - centerOfImage, y - centerOfImage, img.width, tileUnitHeight);
+
+		this.remainFrames--;
+		this.accFrames++;
+		
+		return true;
+	}
+	
+	animationObjects.push(ani);
+}
+
+function addTextAnimationObjects(x,y,msg, frame)
+{
+	var ani = {};
+	
+	ani.type = "text";
+	ani.x = x;
+	ani.y = y;
+	ani.msg = msg;
+	ani.remainFrames = frame;
+	ani.draw = function(context)
+	{
+		if ( this.remainFrames <= 0 ) return false;
+		
+		context.font = GAME_JUDGE_FONT;
+		context.fillStyle = "rgba(255,255,255, " + 1.0 * ( this.remainFrames / frame) + ")";
+		context.fillText(this.msg, this.x, this.y);
+		
+		context.strokeStyle = "rgba(0,0,0, " + 1.0 * ( this.remainFrames / frame) + ")";
+		context.strokeText(this.msg, this.x, this.y);
+		
+		this.remainFrames--;
+		
+		return true;
+	}
+	
+	animationObjects.push(ani);
+}
+
+function drawAnimationObjects(context)
+{
+	for ( var i=0; i<animationObjects.length; ++i )
+	{
+		if ( i == 0 && animationObjects[i] == null )
+		{
+			animationObjects.shift();
+			i = -1;
+			continue;
+		}
+		
+		if ( animationObjects[i] != null )
+		{
+			var ret = animationObjects[i].draw(context);
+			
+			if ( ret == false )
+			{
+				animationObjects[i] = null;
+			}
+		}
+	}
+}
+
+var pressed_Z = false;
+var pressed_X = false;
+var pressed_C = false;
+var pressed_V = false;
+
+function drawPadEffect(context)
+{
+	const EFFECT_WIDTH = CANVAS_WIDTH / 4;
+	const EFFECT_HEIGHT = CANVAS_HEIGHT;
+	const EFFECT_MARGIN = 2;
+
+	var startX = 0;
+
+	context.fillStyle="rgba(255,255,255, 0.1)";
+	if ( pressed_Z )
+	{
+		context.fillRect(startX + EFFECT_MARGIN, 0, EFFECT_WIDTH - ( 2 * EFFECT_MARGIN ), EFFECT_HEIGHT);
+	}
+	
+	startX += EFFECT_WIDTH;
+	
+	if ( pressed_X )
+	{
+		context.fillRect(startX + EFFECT_MARGIN, 0, EFFECT_WIDTH - ( 2 * EFFECT_MARGIN ), EFFECT_HEIGHT);
+	}
+	
+	startX += EFFECT_WIDTH;
+	if ( pressed_C )
+	{
+		context.fillRect(startX + EFFECT_MARGIN, 0, EFFECT_WIDTH - ( 2 * EFFECT_MARGIN ), EFFECT_HEIGHT);
+	}
+	
+	startX += EFFECT_WIDTH;
+	if ( pressed_V )
+	{
+		context.fillRect(startX + EFFECT_MARGIN, 0, EFFECT_WIDTH - ( 2 * EFFECT_MARGIN ), EFFECT_HEIGHT);
+	}
 }
 
 document.onkeydown=onGameKeyDown;
