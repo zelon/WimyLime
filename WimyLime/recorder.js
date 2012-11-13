@@ -133,7 +133,7 @@ function fillData()
 	var vars = getUrlVars();
 	
 	var videoID = getVideoID();
-	var author = vars["author"];
+	var author = decodeURIComponent(vars["author"]);
 	
 	$("videoid").value = videoID;
 	$("author").value = author;
