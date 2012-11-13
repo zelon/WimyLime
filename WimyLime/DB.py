@@ -69,7 +69,7 @@ class insertLime(webapp2.RequestHandler):
         newLime = LimeData(lime_index = newIndex, author = author, videoid = videoid, title = videotitle, notes = notes, end_second = end_second)
         newLime.put()
         
-        self.response.out.write("<html><body>ok : <a href='player.htm?lime_index=" + str(newIndex) + "'>Go to play</a><br /><a href='list.htm'>List limes</a></body></html>")
+        self.response.out.write("<html><body onload=\"location.href='/';\">insert ok</body></html>")
 
 class listLime(webapp2.RequestHandler):
     
