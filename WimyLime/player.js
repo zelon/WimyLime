@@ -386,19 +386,6 @@ function draw()
 	drawAnimationObjects(context);
 }
 
-function requestBackgroundImage(videoid)
-{
-	request("/getVideoTitle.py?videoid=" + videoid,
-			function(responseJSON)
-			{
-				findImage(responseJSON["title"], function(result)
-						{
-							var body = document.getElementById("mainBody");
-							body.style.backgroundImage = "url('" + result + "')";
-							//body.style.opacity = 0.048;
-						});
-				
-			}, null);
-}
+
 
 startMainLoop(draw);

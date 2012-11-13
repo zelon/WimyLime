@@ -72,9 +72,9 @@ handlers:
   static_files: youtube.js
   upload: youtube.js
 
-- url: /common.js
-  static_files: common.js
-  upload: common.js
+- url: /game_common.js
+  static_files: game_common.js
+  upload: game_common.js
   
 - url: /images/note1.png
   static_files: images/note1.png

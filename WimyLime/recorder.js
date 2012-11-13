@@ -135,6 +135,8 @@ function fillData()
 	var videoID = getVideoID();
 	var author = decodeURIComponent(vars["author"]);
 	
+	requestBackgroundImage(videoID);
+
 	$("videoid").value = videoID;
 	$("author").value = author;
 	$("show_author").innerHTML = author;
