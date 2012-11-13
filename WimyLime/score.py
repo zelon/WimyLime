@@ -32,7 +32,7 @@ class score(webapp2.RequestHandler):
     <script src="findImage.js"></script>
 
 </head>
-<body id="mainBody" onload="requestBackgroundImage('%s');">
+<body id="mainBody" onload="requestBackgroundImage('""" + videoid + """');">
     <div id="indexmain" style="background-color:black">
         <div id="main_head">
             <span class="mainlogo">RESULT</span>
@@ -51,20 +51,20 @@ class score(webapp2.RequestHandler):
             <table id="result_table">
                 <tr>
                     <th  class="result_header">Total Notes</td>
-                    <td class="result_data">%s</td>
+                    <td class="result_data">""" + totalNotes + """</td>
                 </tr>
                 <tr>
                     <th  class="result_header">Max Combo</td>
-                    <td class="result_data">%s</td>
+                    <td class="result_data">""" + maxCombo + """</td>
                 </tr>
                 <tr>
                     <th  class="result_header">Miss</td>
-                    <td class="result_data">%s</td>
+                    <td class="result_data">""" + miss + """</td>
                 </tr>
             </table>
             
             <div id="result_play_again">
-                <a href='/player.htm?lime_index=%s' ><span id="result_play_again">Play Again</span></a>
+                <a href='/player.htm?lime_index=""" + lime_index + """' ><span id="result_play_again">Play Again</span></a>
             </div>
         </div>
     </div>
@@ -73,8 +73,8 @@ class score(webapp2.RequestHandler):
     Made by zelon
     </div>
 </body>
-</html>
-            """ % (videoid, lime_index, totalNotes, maxCombo, miss))
+</html>"""
+            )
 
 app = webapp2.WSGIApplication([
                                 ('/score.py', score)
