@@ -12,6 +12,7 @@ var end_second = 99999;
 var lime_index = -1;
 
 var scoreData = {};
+var videoid = "";
 
 function countNotes(notes)
 {
@@ -197,6 +198,7 @@ function moveToScorePage()
 {
 	post_to_url("/score.py",
 		{
+			"videoid" : videoid,
 			"totalNotes" : scoreData["totalNotes"],
 			"maxCombo" : scoreData["maxCombo"],
 			"miss" : scoreData["miss"],

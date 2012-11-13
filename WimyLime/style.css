@@ -207,3 +207,32 @@ input
 	margin-left: auto;
 	margin-right: auto;
 }
+
+.result_header
+{
+	font-family: 'Audiowide', cursive;
+	color: white;
+}
+
+.result_data
+{
+	font-family: 'Audiowide', cursive;
+	color: white;
+	font-size: 150%;
+	text-align: center;
+}
+
+#result_Table
+{
+	width: 100%;
+}
+
+#result_play_again
+{
+	font-family: 'Audiowide', cursive;
+	color: white;
+	font-size: 150%;
+	text-align: right;
+	margin: 20px;
+	margin-top: 100px;
+}

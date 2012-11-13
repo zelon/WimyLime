@@ -14,33 +14,67 @@ class score(webapp2.RequestHandler):
         
         logging.info(args)
         
+        videoid = self.request.get("videoid")
         totalNotes = self.request.get("totalNotes")
         maxCombo = self.request.get("maxCombo")
         miss = self.request.get("miss")
         lime_index = self.request.get("lime_index") 
         
         self.response.out.write("""
-            <html>
-                <body>
-                <a href='/'>Home</a> <a href='/player.htm?lime_index=%s'>Play Again</a>
-                <br />
-                <br />
-                <table>
-                    <tr>
-                        <th>Total Notes</td>
-                        <td>%s</td>
-                    </tr>
-                    <tr>
-                        <th>Max Combo</td>
-                        <td>%s</td>
-                    </tr>
-                    <tr>
-                        <th>Miss</td>
-                        <td>%s</td>
-                    </tr>
-                </body>
-            </html>
-            """ % (lime_index, totalNotes, maxCombo, miss))
+<html>
+<head>
+    <link href='http://fonts.googleapis.com/css?family=Audiowide' rel='stylesheet' type='text/css'>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    
+    <script src="http://www.google.com/jsapi" type="text/javascript"></script>
+    <script src="util.js" type="text/javascript"></script>
+    <script src="game_common.js" type="text/javascript"></script>
+    <script src="findImage.js"></script>
+
+</head>
+<body id="mainBody" onload="requestBackgroundImage('%s');">
+    <div id="indexmain" style="background-color:black">
+        <div id="main_head">
+            <span class="mainlogo">RESULT</span>
+            <br /><br />
+            <div id="main_menu">
+                <a href='/'>Home</a>
+                &nbsp;&nbsp;
+                <a href='/startRecord.htm'>Create</a>
+                &nbsp;&nbsp;
+                <a href='/list.htm'>Play</a>
+            </div>
+        </div>
+        <div id="main_inner">
+            <br />
+            <br />
+            <table id="result_table">
+                <tr>
+                    <th  class="result_header">Total Notes</td>
+                    <td class="result_data">%s</td>
+                </tr>
+                <tr>
+                    <th  class="result_header">Max Combo</td>
+                    <td class="result_data">%s</td>
+                </tr>
+                <tr>
+                    <th  class="result_header">Miss</td>
+                    <td class="result_data">%s</td>
+                </tr>
+            </table>
+            
+            <div id="result_play_again">
+                <a href='/player.htm?lime_index=%s' ><span id="result_play_again">Play Again</span></a>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div id="footer">
+    Made by zelon
+    </div>
+</body>
+</html>
+            """ % (videoid, lime_index, totalNotes, maxCombo, miss))
 
 app = webapp2.WSGIApplication([
                                 ('/score.py', score)
