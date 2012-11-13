@@ -237,15 +237,17 @@ function extractVideoIDFromYouTubeURL(url)
 {
     var vars = [], hash;
     
+    var trimmedURL = url.trim();
+    
     /// url 중에서 첫번째 '?' 이후만 가져온다.
-    var findIndex = url.indexOf('?');
+    var findIndex = trimmedURL.indexOf('?');
     
     if ( findIndex == -1 )
     {
     	return vars;
     }
     
-    var params = url.slice(findIndex + 1);
+    var params = trimmedURL.slice(findIndex + 1);
     
     /// GET 변수 중에 # 은 제거한다.
     params = params.replace("#", "");
