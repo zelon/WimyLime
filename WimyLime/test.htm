@@ -1,0 +1,78 @@
+<html>
+<body>
+
+<script>
+
+/*
+google.load("swfobject", "2.1");
+
+var ytplayer = null;
+function onYouTubePlayerReady(playerId)
+{
+	ytplayer = document.getElementById("ytPlayer");
+
+	ytplayer.playVideo();
+}
+
+function _run()
+{
+	// The video to load.
+    var videoID = "3fy4cqWMhyI"; ///< be my baby
+    //var videoID = "1UwAUAayvbY"; ///< oblivion
+    // Lets Flash from another domain call JavaScript
+    var params = { allowScriptAccess: "always" };
+    // The element id of the Flash embed
+    var atts = { id: "ytPlayer" };
+    // All of the magic handled by SWFObject (http://code.google.com/p/swfobject/)
+    swfobject.embedSWF("http://www.youtube.com/v/" + videoID + "?version=3&enablejsapi=1&playerapiid=player1", 
+                           "videoDiv", "480", "300", "9", null, null, params, atts);
+    
+}
+
+google.setOnLoadCallback(_run);
+*/
+
+
+// 2. This code loads the IFrame Player API code asynchronously.
+  var tag = document.createElement('script');
+  tag.src = "//www.youtube.com/iframe_api";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+  // 3. This function creates an <iframe> (and YouTube player)
+  //    after the API code downloads.
+  var player;
+  function onYouTubeIframeAPIReady() {
+    player = new YT.Player('videoDiv', {
+      width: '480',
+      height: '300',
+      videoId: '3fy4cqWMhyI',
+      events: {
+        'onReady': onPlayerReady,
+        'onStateChange': onPlayerStateChange
+      }
+    });
+  }
+
+  // 4. The API will call this function when the video player is ready.
+  function onPlayerReady(event) {
+    event.target.playVideo();
+  }
+
+  // 5. The API calls this function when the player's state changes.
+  //    The function indicates that when playing a video (state=1),
+  //    the player should play for six seconds and then stop.
+  var done = false;
+  function onPlayerStateChange(event)
+  {
+  }
+  
+  function stopVideo() {
+    player.stopVideo();
+  }
+</script>
+
+<div id="videoDiv"></div>
+
+</body>
+</html>

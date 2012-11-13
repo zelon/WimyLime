@@ -13,6 +13,10 @@ handlers:
   static_files: recorder.htm
   upload: recorder.htm
 
+- url: /test.htm
+  static_files: test.htm
+  upload: test.htm
+
 - url: /list.htm
   static_files: list.htm
   upload: list.htm
