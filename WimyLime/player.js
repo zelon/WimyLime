@@ -116,7 +116,7 @@ function onMissNote()
 	scoreData["miss"]++;
 }
 
-function judge(notes, x)
+function judge(notes, x, pop_image)
 {
 	var index = findClosestNoteIndex(notes);
 	
@@ -127,7 +127,7 @@ function judge(notes, x)
 		notes.shift();
 		
 		var y = CANVAS_HEIGHT - NOTE_TOUCH_CHECK_BAR_POSITION;
-		addImageAnimationObjects(x, y, image_note1pop); 
+		addImageAnimationObjects(x, y, pop_image); 
 		addTextAnimationObjects(x, y + 2, "Cool", 20);
 		
 		onHitNote();
@@ -136,22 +136,22 @@ function judge(notes, x)
 
 function onGamePad1()
 {
-	judge(notes.pad1, 60);
+	judge(notes.pad1, 60, image_note1pop);
 }
 
 function onGamePad2()
 {
-	judge(notes.pad2, 180);
+	judge(notes.pad2, 180, image_note2pop);
 }
 
 function onGamePad3()
 {
-	judge(notes.pad3, 300);
+	judge(notes.pad3, 300, image_note3pop);
 }
 
 function onGamePad4()
 {
-	judge(notes.pad4, 420);
+	judge(notes.pad4, 420, image_note4pop);
 }
 
 function drawNoteImage(context, img, centerX, centerY)
