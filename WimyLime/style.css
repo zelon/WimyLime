@@ -34,6 +34,11 @@ hr
 	border: 0px;
 }
 
+#taOutput
+{
+	display: none;
+}
+
 #mycanvas
 {
 	width: 480px;
