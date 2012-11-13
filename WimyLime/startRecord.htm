@@ -20,8 +20,8 @@
 				<form action="recorder.htm" method="get" onsubmit="return checkForm()">
 				<table width="90%" align="center">
 					<tr>
-						<td>비디오 주소 : </td>
-						<td><input type="text" size="45" name="videoURL" id="videoURL" onchange="checkTitle()" required="required"></td>
+						<td>YouTube 비디오 주소 : </td>
+						<td><input type="text" size="45" name="videoURL" id="videoURL" onchange="checkTitle()" required="required" placeholder="YouTube 에서 검색한 동영상의 주소를 입력하세요"></td>
 					</tr>
 					<tr>
 						<td></td>
@@ -29,7 +29,7 @@
 					</tr>
 					<tr>
 						<td>리듬 만든 이 : </td>
-						<td><input type="text" name="author" id="author" required="required"></td>
+						<td><input type="text" size="45" name="author" id="author" required="required" placeholder="자신의 이름을 입력하세요"></td>
 					</tr>
 					<tr>
 						<script>
@@ -50,6 +50,10 @@
 								alert(msg);
 								$(id).focus();
 								return false;
+							}
+							else
+							{
+								$(id).value = $(id).value.trim();
 							}
 							return true;
 						}
