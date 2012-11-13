@@ -5,23 +5,29 @@
 	<title>WimeLime - Rhythm Action with YouTube</title>
 	
 	<script src="util.js"></script>
-	
+
+	<link href='http://fonts.googleapis.com/css?family=Audiowide' rel='stylesheet' type='text/css'>
 	<link href="style.css" rel="stylesheet" type="text/css" />
 </head>
 <body id="whitebody">
-	<br />
 	<div id="indexmain">
 		<div id="main_head">
-			WimyLime v1.0
-			<img src="/images/lime.png" id="main_logo" />
+			<span class="mainlogo"><a href='/'>WimyLime</a></span>
+			<br /><br />
+			<div id="main_menu">
+				<a href='/'>Home</a>
+				&nbsp;&nbsp;
+				<a href='/startRecord.htm'>Create</a>
+				&nbsp;&nbsp;
+				<a href='/list.htm'>Play</a>
+			</div>
 		</div>
 		<div id="main_inner">
-			<p><a href="startRecord.htm">+ 새로운 리듬 만들기</a></p>
+			<p><a href="startRecord.htm" class="menu">+Create</a></p>
 			<br />
+			<p><a href="list.htm" class="menu">@Play</a></p>
+			<hr />
 			<table id="lime_table" width="90%" align="center">
-				<tr>
-					<th colspan="2" style="color:black;">리듬 플레이하기</th>
-				</tr>
 				<tr>
 					<td width="100%" colspan="2" align="center"><div id="list_table" style="text-align:center;">Loading...</div></td>
 				</tr>
@@ -30,7 +36,7 @@
 					<td style="text-align: right;"><a href="list.htm">전체 보기 >></a></td>
 				</tr>
 			</table>
-			
+			<br />
 			
 		</div>
 	</div>

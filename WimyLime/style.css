@@ -9,6 +9,17 @@ body
 	font-size: 80%;
 }
 
+a
+{
+	text-decoration:none;
+	color: #202020;
+}
+
+hr
+{
+	border: solid #c0c0c0 2px;
+}
+
 #allcontent
 {
 	width: 480px;
@@ -89,15 +100,30 @@ body
 {
 	background-color: white;
 }
+
+.mainlogo
+{
+	font-family: 'Audiowide', cursive;
+	font-size: 500%;
+}
+
+.menu
+{
+	font-family: 'Audiowide', cursive;
+	font-size: 300%;
+}
+
 #indexmain
 {
-	border: 1px #eeeeee solid;
+	border: 2px #000000 solid;
 	border-radius: 5px 5px 5px 5px;
 	
 	width: 480px;
 	margin: 0px;
 	margin-left: auto;
 	margin-right: auto;
+
+	margin-top: 20px;
 }
 
 #main_logo
@@ -109,12 +135,20 @@ body
 #main_head
 {
 	border-radius: 5px 5px 0px 0px;
+	border-bottom: solid 2px black;
 
-	height: 20px;
+	/*height: 20px;*/
 	color: white;
 	font-weight: bold;
 	background-color: #aea79f;
+	text-align: center;
 	padding: 5px;
+}
+
+#main_menu
+{
+	width: 100%;
+	margin: 0px;
 }
 
 #main_inner
@@ -122,6 +156,11 @@ body
 	width: 480px;
 	text-align: center;
 	color:black;
+}
+
+th
+{
+	color: black;
 }
 
 td
@@ -133,6 +172,12 @@ td
 input
 {
 	border: 1px solid #aaaaaa;
+}
+
+.data_table
+{
+	border: 1px solid #eeeeee;
+	width: 100%;
 }
 
 .fullSizeButton
