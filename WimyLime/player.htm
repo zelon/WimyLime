@@ -13,24 +13,24 @@
 <script src="player.js" type="text/javascript"></script>
 </head>
 <body id="mainBody">
-	<div id="allcontent">
-		<div id="videoDiv">Loading...</div>
-		<canvas id="mycanvas" width="480" height="400"></canvas>
-		<div id="controller">
-			<table id="inputTable">
-				<tr>
-					<td id="inputPad1"></td>
-					<td id="inputPad2"></td>
-					<td id="inputPad3"></td>
-					<td id="inputPad4"></td>
-				</tr>
-			</table>
+	<div id="outer_content">
+		<div id="allcontent">
+			<div id="videoDiv">Loading...</div>
+			<canvas id="mycanvas" width="480" height="400"></canvas>
+			<div id="controller">
+				<table id="inputTable">
+					<tr>
+						<td id="inputPad1"></td>
+						<td id="inputPad2"></td>
+						<td id="inputPad3"></td>
+						<td id="inputPad4"></td>
+					</tr>
+				</table>
+			</div>
 		</div>
 	</div>
 	<br/>
-	<br/>
-	<br/>
-	<div id="output" style="background-color:red; height: 500px;">
+	<div id="output" style="display:none; background-color:red; height: 500px;">
 	</div>
 	<script>
 	document.getElementById("inputPad1").addEventListener("touchstart", onTouchPad1, false);

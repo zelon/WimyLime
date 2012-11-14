@@ -16,6 +16,7 @@
 
   </head>
   <body id="mainBody">
+  	<div id="outer_content">
   	<div id="allcontent">
   		<div style="display: none;">
   			<p>
@@ -48,20 +49,19 @@
 		document.getElementById("inputPad4").addEventListener("touchend", onTouchPadEnd4, false);
 		</script>
 	    
-	    <br />
-	    
 		<div id="submitForm">
 			<form action="insertLime.py" method="post" onsubmit="return onRequestSubmit();">
-			<input type="hidden" name="videoid" id="videoid">
-			<input type="hidden" name="videotitle" id="videotitle">
-			<input type="hidden" name="author" id="author">
-			<input type="hidden" name="end_second" id="end_second">
-			<input type="submit" value="입력 완료" class="fullSizeButton">
-			<br />
-			<a href='#' onclick='$("taOutput").style.display = "block";'>+ Show details</a><br/>
-			<textarea  style="width:400px; height:800px; /*display:none;*/" id="taOutput" name="notes"></textarea>
+				<input type="hidden" name="videoid" id="videoid">
+				<input type="hidden" name="videotitle" id="videotitle">
+				<input type="hidden" name="author" id="author">
+				<input type="hidden" name="end_second" id="end_second">
+				<input type="submit" value="입력 완료" class="fullSizeButton">
+				<br />
+				<a href='#' onclick='$("taOutput").style.display = "block";'>+ Show details</a><br/>
+				<textarea  style="width:400px; height:800px; " id="taOutput" name="notes"></textarea>
 			</form>
 		</div>
+  	</div>
   	</div>
 
     <div id="result" style="display:none;"></div>
