@@ -1,5 +1,4 @@
 
-var keytyped = false;
 var keylog = "";
 
 var notePad1 = [];
@@ -113,17 +112,6 @@ function draw()
 	
 	if ( canvas == null ) return;
 	var context = canvas.getContext("2d");
-	
-	context.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-	context.fillStyle = "rgb(150,150,150)";
-	
-	if ( keytyped )
-	{
-		context.fillStyle = "rgb(255,255,255)";
-		keytyped = false;
-	}
-	
-	context.fillRect(0,0,CANVAS_WIDTH, CANVAS_HEIGHT);
 	
 	drawBackground(context);
 	
