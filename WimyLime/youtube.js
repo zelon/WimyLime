@@ -30,13 +30,13 @@ google.setOnLoadCallback(_run);
 
 
 // 2. This code loads the IFrame Player API code asynchronously.
-  var tag = document.createElement('script');
-  tag.src = "//www.youtube.com/iframe_api";
-  var firstScriptTag = document.getElementsByTagName('script')[0];
-  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+var tag = document.createElement('script');
+tag.src = "//www.youtube.com/iframe_api";
+var firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-  // 3. This function creates an <iframe> (and YouTube player)
-  //    after the API code downloads.
+// 3. This function creates an <iframe> (and YouTube player)
+//    after the API code downloads.
 var g_youtubePlayer;
 var g_youtubeReady = false;
 var g_youtubeVideoID = "";
@@ -49,18 +49,24 @@ function waitingYouTubeAndPlay()
 		return;
 	}
 	
-	  var videoID = g_youtubeVideoID;
+	var videoID = g_youtubeVideoID;
 	  
-	  g_youtubePlayer = new YT.Player('videoDiv', {
-      width: '480',
-      height: '300',
-      videoId: videoID,
-      events: {
-        'onReady': onPlayerReady,
-        'onStateChange': onPlayerStateChange
-      }
-    });
-	
+	g_youtubePlayer = new YT.Player('videoDiv',
+		{
+			width: '480',
+			height: '300',
+			videoId: videoID,
+			events:
+			{
+		        'onReady': onPlayerReady,
+		        'onStateChange': onPlayerStateChange
+			},
+			playerVars :
+			{
+				'autohide' : 1
+			}
+		}
+    );
 }
 
 function playYouTubeWhenReady(videoid)
@@ -70,40 +76,45 @@ function playYouTubeWhenReady(videoid)
 	setTimeout(waitingYouTubeAndPlay, 1000);
 }
   
-  function onYouTubeIframeAPIReady()
-  {
-	  g_youtubeReady = true;
-  }
+function onYouTubeIframeAPIReady()
+{
+	g_youtubeReady = true;
+}
 
-  // 4. The API will call this function when the video player is ready.
-  function onPlayerReady(event) {
-    event.target.playVideo();
-  }
+// 4. The API will call this function when the video player is ready.
+function onPlayerReady(event)
+{
+	event.target.playVideo();
+}
 
-  // 5. The API calls this function when the player's state changes.
-  //    The function indicates that when playing a video (state=1),
-  //    the player should play for six seconds and then stop.
-  var done = false;
-  function onPlayerStateChange(event) {
-	  return;
-    if (event.data == YT.PlayerState.PLAYING && !done) {
+// 5. The API calls this function when the player's state changes.
+//    The function indicates that when playing a video (state=1),
+//    the player should play for six seconds and then stop.
+var done = false;
+function onPlayerStateChange(event)
+{
+	return;
+    if (event.data == YT.PlayerState.PLAYING && !done)
+    {
       setTimeout(stopVideo, 6000);
       done = true;
     }
-  }
-  function stopVideo() {
-	  g_youtubePlayer.stopVideo();
-  }
-  
-  
-  var g_lastYoutubeCurrentTimeUpdatedTime = 0;
-  var g_lastYoutubeCurrentTime = 0;
+}
 
-  function getFixedYoutubeCurrentTime()
-  {
-	  return getFixedYoutbueCurrentTimeEx();
+function stopVideo()
+{
+	g_youtubePlayer.stopVideo();
+}
+  
+  
+var g_lastYoutubeCurrentTimeUpdatedTime = 0;
+var g_lastYoutubeCurrentTime = 0;
+
+function getFixedYoutubeCurrentTime()
+{
+	return getFixedYoutbueCurrentTimeEx();
 	  
-  	var currentVideoTime = g_youtubePlayer.getCurrentTime();
+ 	var currentVideoTime = g_youtubePlayer.getCurrentTime();
   	var fixedCurrentVideoTime = currentVideoTime; 
   	var time = new Date();
   	
@@ -121,8 +132,8 @@ function playYouTubeWhenReady(videoid)
   		}
   	}
   	
-  	return fixedCurrentVideoTime;
-  }
+	return fixedCurrentVideoTime;
+}
 
 var g_youtubeStartedTime = 0;
 var g_youtubeStartedTimeUTC = 0;
