@@ -160,7 +160,7 @@ function drawNoteImage(context, img, centerX, centerY)
 	var tileUnitHeight = img.width;
 	var numberOfTile = img.height / tileUnitHeight;
 	
-	var drawTileIndex = frameAcc % numberOfTile;
+	var drawTileIndex = g_frameAcc % numberOfTile;
 	
 	context.drawImage(img, 0, drawTileIndex * tileUnitHeight, img.width, tileUnitHeight, centerX - centerOfImage, centerY - centerOfImage, img.width, tileUnitHeight);
 }
@@ -228,17 +228,6 @@ function drawAllNote(context)
 			}
 		}
 	}
-}
-
-var frameAcc = 0;
-function drawBackground(context)
-{
-	++frameAcc;
-	
-	var strength = Math.floor(Math.abs(Math.sin(frameAcc/30.0)) * 30.0);
-	var rgb = "rgb(" + strength + "," + strength + "," + strength + ")";
-	context.fillStyle = rgb;
-	context.fillRect(0,0, CANVAS_WIDTH, CANVAS_HEIGHT);
 }
 
 

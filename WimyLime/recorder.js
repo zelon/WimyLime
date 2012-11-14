@@ -125,6 +125,8 @@ function draw()
 	
 	context.fillRect(0,0,CANVAS_WIDTH, CANVAS_HEIGHT);
 	
+	drawBackground(context);
+	
 	drawStatusMsg(context);
 	drawPadEffect(context);
 	drawAnimationObjects(context);

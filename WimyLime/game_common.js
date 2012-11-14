@@ -414,5 +414,17 @@ function drawPadEffect(context)
 	}
 }
 
+var g_frameAcc = 0;
+function drawBackground(context)
+{
+	++g_frameAcc;
+	
+	var strength = Math.floor(Math.abs(Math.sin(g_frameAcc/30.0)) * 30.0);
+	var rgb = "rgb(" + strength + "," + strength + "," + strength + ")";
+	context.fillStyle = rgb;
+	context.fillRect(0,0, CANVAS_WIDTH, CANVAS_HEIGHT);
+}
+
+
 document.onkeydown=onGameKeyDown;
 document.onkeyup=onGameKeyUp;
