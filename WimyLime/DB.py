@@ -18,7 +18,7 @@ class LimeData(ndb.Model):
     videoid = ndb.StringProperty()
     title = ndb.StringProperty()
     author = ndb.StringProperty()
-    notes = ndb.StringProperty()
+    notes = ndb.TextProperty()
     end_second = ndb.StringProperty()
     
     insert_time = ndb.DateTimeProperty(auto_now_add=True)
