@@ -14,9 +14,6 @@ var lime_index = -1;
 var scoreData = {};
 var videoid = "";
 
-const MAX_HP = 10;
-var hp = MAX_HP;
-
 function countNotes(notes)
 {
 	return notes.pad1.length + notes.pad2.length + notes.pad3.length + notes.pad4.length;
@@ -99,6 +96,13 @@ function calcAddingScore(combo)
 
 function onHitNote()
 {
+	++hp;
+	
+	if ( hp > MAX_HP )
+	{
+		hp = MAX_HP;
+	}
+	
 	++combo;
 	
 	++scoreData["hit"];

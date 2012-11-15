@@ -12,6 +12,10 @@ var FPS = 30;
 const GAME_JUDGE_FONT = "bold 30px sans-serif";
 const GAME_STATUS_FONT = "bold 20px sans-serif";
 
+const MAX_HP = 10;
+const WARNING_HP = 3;
+var hp = MAX_HP;
+
 function startLoop()
 {
 	setInterval(mainFrameFunction, 1000/FPS);
@@ -444,8 +448,23 @@ function drawBackground(context)
 {
 	++g_frameAcc;
 	
-	var strength = Math.floor(Math.abs(Math.sin(g_frameAcc/30.0)) * 30.0);
+	var max_strength = 30;
+	var frequence = 30.0; ///< if frequence is low, blank speed is up
+	
+	if ( hp <= WARNING_HP )
+	{
+		frequence /= 6.0;
+		max_strength *= 2;
+	}
+	
+	var strength = Math.floor(Math.abs(Math.sin(g_frameAcc/frequence)) * max_strength);
 	var rgb = "rgb(" + strength + "," + strength + "," + strength + ")";
+	
+	if ( hp <= WARNING_HP )
+	{
+		rgb = "rgb(" + strength + ",0,0)";
+		
+	}
 	context.fillStyle = rgb;
 	context.fillRect(0,0, CANVAS_WIDTH, CANVAS_HEIGHT);
 }
