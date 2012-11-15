@@ -93,11 +93,10 @@ function onPlayerReady(event)
 var done = false;
 function onPlayerStateChange(event)
 {
-	return;
     if (event.data == YT.PlayerState.PLAYING && !done)
     {
-      setTimeout(stopVideo, 6000);
-      done = true;
+    	event.target.setVolume(100);
+    	done = true;
     }
 }
 

@@ -274,6 +274,13 @@ function drawAllNote(context)
 		drawNote(context, currentVideoTime, notes.pad3, image_note3, 240);
 		drawNote(context, currentVideoTime, notes.pad4, image_note4, 360);
 		
+		var remainSeconds = Number(end_second) - Number(currentVideoTime) - 0.3;
+		
+		if ( remainSeconds < 1.0 )
+		{
+			g_youtubePlayer.setVolume ( 100 * remainSeconds );
+		}
+		
 		if ( currentVideoTime >= end_second )
 		{
 			scoreData["clear"] = "cleared";
