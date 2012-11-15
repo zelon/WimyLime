@@ -242,6 +242,30 @@ input
 	text-align: center;
 }
 
+.result_score_header
+{
+	font-family: 'Audiowide', cursive;
+	font-size: 250%;
+	color: white;
+	width: 70%;
+}
+
+.result_score_data
+{
+	font-family: 'Audiowide', cursive;
+	color: white;
+	font-size: 300%;
+	text-align: center;
+}
+
+.result_additional
+{
+	font-family: 'Audiowide', cursive;
+	color: white;
+	font-size: 200%;
+	text-align: center;
+}
+
 #result_Table
 {
 	width: 100%;

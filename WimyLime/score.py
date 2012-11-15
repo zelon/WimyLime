@@ -8,6 +8,9 @@ from google.appengine.ext import ndb
 
 class score(webapp2.RequestHandler):
 
+    def get(self, key):
+        return self.request.get(key)
+
     def post(self):
         
         args = self.request.arguments()
@@ -19,6 +22,16 @@ class score(webapp2.RequestHandler):
         maxCombo = self.request.get("maxCombo")
         miss = self.request.get("miss")
         lime_index = self.request.get("lime_index") 
+        
+        resultMsg = "FAILED"
+        
+        if self.get("clear") == "cleared":
+            resultMsg = "CLEARED"
+        
+        additional = ""
+        
+        if miss == "0":
+            additional = "- PERFECT -"
         
         self.response.out.write("""
 <html>
@@ -35,7 +48,7 @@ class score(webapp2.RequestHandler):
 <body id="mainBody" onload="requestBackgroundImage('""" + videoid + """');">
     <div id="indexmain" style="background-color:black">
         <div id="main_head">
-            <span class="mainlogo">RESULT</span>
+            <span class="mainlogo">""" + resultMsg + """</span>
             <br /><br />
             <div id="main_menu">
                 <a href='/'>Home</a>
@@ -58,8 +71,22 @@ class score(webapp2.RequestHandler):
                     <td class="result_data">""" + maxCombo + """</td>
                 </tr>
                 <tr>
+                    <th  class="result_header">Hit</td>
+                    <td class="result_data">""" + self.get("hit") + """</td>
+                </tr>
+                <tr>
                     <th  class="result_header">Miss</td>
                     <td class="result_data">""" + miss + """</td>
+                </tr>
+                <tr>
+                    <td colspan="2"><hr /></td>
+                </tr>
+                <tr>
+                    <th  class="result_score_header">Score</td>
+                    <td class="result_score_data">""" + self.get("score") + """</td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="result_additional">""" + additional + """</td>
                 </tr>
             </table>
             

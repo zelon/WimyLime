@@ -14,6 +14,9 @@ var lime_index = -1;
 var scoreData = {};
 var videoid = "";
 
+const MAX_HP = 10;
+var hp = MAX_HP;
+
 function countNotes(notes)
 {
 	return notes.pad1.length + notes.pad2.length + notes.pad3.length + notes.pad4.length;
@@ -24,6 +27,9 @@ function loadData()
 	scoreData["miss"] = 0;
 	scoreData["maxCombo"] = 0;
 	scoreData["totalNotes"] = 0;
+	scoreData["hit"] = 0;
+	scoreData["score"] = 0;
+	scoreData["clear"] = "not cleared";
 	
 	lime_index = getUrlVars()["lime_index"];
 
@@ -82,9 +88,22 @@ function findClosestNoteIndex(notes)
 var combo = 0;
 const MINIMUM_COMBO = 5;
 
+function calcAddingScore(combo)
+{
+	var score = 10;
+	
+	score += ( combo * 0.5 );
+	
+	return Number(score.toFixed(0));
+}
+
 function onHitNote()
 {
 	++combo;
+	
+	++scoreData["hit"];
+	
+	scoreData["score"] += calcAddingScore(combo);
 	
 	if ( combo >= MINIMUM_COMBO )
 	{
@@ -114,6 +133,13 @@ function onMissNote()
 	combo = 0;
 	
 	scoreData["miss"]++;
+	
+	--hp;
+	
+	if ( hp <= 0)
+	{
+		moveToScorePage();
+	}
 }
 
 function judge(notes, x, pop_image)
@@ -194,20 +220,27 @@ function drawNote(context, currentVideoTime, notes, loadedImage, x)
 	}
 }
 
+var moving = false;
 function moveToScorePage()
 {
+	if ( moving == true ) return;
+	
+	moving = true;
+
 	post_to_url("/score.py",
 		{
 			"videoid" : videoid,
 			"totalNotes" : scoreData["totalNotes"],
+			"hit" : scoreData["hit"],
 			"maxCombo" : scoreData["maxCombo"],
 			"miss" : scoreData["miss"],
+			"clear" : scoreData["clear"],
+			"score" : scoreData["score"],
 			"lime_index" : lime_index
 		}
 	);
 }
 
-var moving = false;
 function drawAllNote(context)
 {
 	if ( g_youtubePlayer && g_youtubePlayer.getCurrentTime )
@@ -221,11 +254,8 @@ function drawAllNote(context)
 		
 		if ( currentVideoTime >= end_second )
 		{
-			if ( moving == false )
-			{
-				moving = true;
-				moveToScorePage();
-			}
+			scoreData["clear"] = "cleared";
+			moveToScorePage();
 		}
 	}
 }
