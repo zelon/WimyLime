@@ -9,8 +9,8 @@ var KEYCODE_V = 86;
 
 var FPS = 30;
 
-const GAME_JUDGE_FONT = "italic bold 20px sans-serif";
-const GAME_STATUS_FONT = "italic bold 20px sans-serif";
+const GAME_JUDGE_FONT = "bold 30px sans-serif";
+const GAME_STATUS_FONT = "bold 20px sans-serif";
 
 function startLoop()
 {
