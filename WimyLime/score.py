@@ -36,7 +36,6 @@ class score(webapp2.RequestHandler):
         self.response.out.write("""
 <html>
 <head>
-    <link href='http://fonts.googleapis.com/css?family=Audiowide' rel='stylesheet' type='text/css'>
     <link href="style.css" rel="stylesheet" type="text/css" />
     
     <script src="http://www.google.com/jsapi" type="text/javascript"></script>
