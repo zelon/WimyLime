@@ -108,6 +108,11 @@ handlers:
   static_files: images/note4pop.png
   upload: images/note4pop.png
 
+- url: /images/pop_effect.png
+  static_files: images/pop_effect.png
+  upload: images/pop_effect.png
+
+
 - url: /images/lime.png
   static_files: images/lime.png
   upload: images/lime.png

@@ -163,6 +163,7 @@ function judge(notes, x, pop_image)
 		var centerOfImageAnimationX = x + ( CANVAS_WIDTH / 4 / 2);
 		
 		addImageAnimationObjects(centerOfImageAnimationX, centerOfImageAnimationY, pop_image); 
+		addImageAnimationObjects(centerOfImageAnimationX, centerOfImageAnimationY, pop_effect);
 		addTextAnimationObjects(x + drawX, JUDGE_TEXT_Y_POSITION, drawText, 20);
 		
 		onHitNote();

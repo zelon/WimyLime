@@ -42,6 +42,8 @@ var image_note2pop = null;
 var image_note3pop = null;
 var image_note4pop = null;
 
+var pop_effect = null;
+
 var loadedCount = 0;
 
 function onLoadedImage()
@@ -49,7 +51,7 @@ function onLoadedImage()
 	console.log("onLoadedImage");
 	loadedCount++;
 	
-	if ( loadedCount == 8 )
+	if ( loadedCount == 9 )
 	{
 		startLoop();
 		console.log("startLoop");
@@ -90,6 +92,9 @@ function loadImages()
 	image_note4pop.src = "/images/note4pop.png";
 	image_note4pop.onload = onLoadedImage;
 
+	pop_effect = new Image();
+	pop_effect.src = "/images/pop_effect.png";
+	pop_effect.onload = onLoadedImage;
 }
 
 function pressInputPad(id)
