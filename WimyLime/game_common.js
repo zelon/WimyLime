@@ -84,6 +84,24 @@ function loadImages()
 
 }
 
+function pressInputPad(id)
+{
+	//$(id).style.position = "relative";
+	//$(id).style.top = "1px";
+	//$(id).style.fontSize = "180%";
+	
+	$(id).style.opacity = "0.9";
+}
+
+function upInputPad(id)
+{
+	//$(id).style.position = "static";
+	//$(id).style.top = "";
+	//$(id).style.fontSize = "200%";
+
+	$(id).style.opacity = "1";
+}
+
 function onKey_Z()
 {
 	if ( onGamePad1 )
@@ -91,6 +109,7 @@ function onKey_Z()
 		onGamePad1();
 	}
 	pressed_Z=true;
+	pressInputPad("inputPad1");
 	debugMsg("Z");
 
 	draw();
@@ -103,6 +122,7 @@ function onKey_X()
 		onGamePad2();
 	}
 	pressed_X=true;
+	pressInputPad("inputPad2");
 	debugMsg("X");
 
 	draw();
@@ -115,6 +135,7 @@ function onKey_C()
 		onGamePad3();
 	}
 	pressed_C=true;
+	pressInputPad("inputPad3");
 	debugMsg("C");
 
 	draw();
@@ -127,6 +148,7 @@ function onKey_V()
 		onGamePad4();
 	}
 	pressed_V=true;
+	pressInputPad("inputPad4");
 
 	draw();
 	debugMsg("V");
@@ -136,13 +158,14 @@ function onKeyUp_Z()
 {
 	pressed_Z=false;
 	debugMsg("Z");
-
+	upInputPad("inputPad1");
 	draw();
 }
 
 function onKeyUp_X()
 {
 	pressed_X=false;
+	upInputPad("inputPad2");
 	debugMsg("X");
 
 	draw();
@@ -151,6 +174,7 @@ function onKeyUp_X()
 function onKeyUp_C()
 {
 	pressed_C=false;
+	upInputPad("inputPad3");
 	debugMsg("C");
 
 	draw();
@@ -159,6 +183,7 @@ function onKeyUp_C()
 function onKeyUp_V()
 {
 	pressed_V=false;
+	upInputPad("inputPad4");
 	debugMsg("V");
 
 	draw();
