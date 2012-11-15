@@ -9,7 +9,7 @@ var KEYCODE_V = 86;
 
 var FPS = 30;
 
-const GAME_JUDGE_FONT = "bold 30px sans-serif";
+const GAME_JUDGE_FONT = "bold 25px sans-serif";
 const GAME_STATUS_FONT = "bold 20px sans-serif";
 
 const MAX_HP = 10;
