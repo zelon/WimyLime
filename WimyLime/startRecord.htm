@@ -1,15 +1,17 @@
 <html>
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	<script src="util.js"></script>
+
+	<script src="http://www.google.com/jsapi" type="text/javascript"></script>
+	<script src="util.js" type="text/javascript"></script>
 	<script src="game_common.js" type="text/javascript"></script>
-	<script src="common.js"></script>
+	<script src="findImage.js"></script>
 
 	<link href="style.css" rel="stylesheet" type="text/css" />
 
 </head>
-<body id="whitebody">
-	<div id="indexmain">
+<body id="mainBody" class="whitebackground">
+	<div id="indexmain" class="whitebackground">
 		<div id="main_head">
 			<span class="mainlogo"><a href='/'>WimyLime</a></span>
 			<br /><br />
@@ -37,7 +39,7 @@
 						<td><span id="status"></span></td>
 					</tr>
 					<tr>
-						<td>리듬 만든 이 : </td>
+						<td>제작자 : </td>
 						<td><input type="text" size="45" name="author" id="author" required="required" maxlength="20" placeholder="자신의 이름을 입력하세요"></td>
 					</tr>
 					<tr>
@@ -45,11 +47,16 @@
 						function checkTitle()
 						{
 							$("status").innerHTML = "비디오 제목 얻어오는 중...";
-							request("/getVideoTitle.py?videoid=" + extractVideoIDFromYouTubeURL($("videoURL").value),
+							
+							videoid = extractVideoIDFromYouTubeURL($("videoURL").value);
+							
+							request("/getVideoTitle.py?videoid=" + videoid,
 									function(responseJSON)
 									{
 										$("status").innerHTML = responseJSON["title"];
 									}, null);
+							
+							requestBackgroundImage(videoid);
 						}
 						
 						function checkFormAndAlertAndFocus(id, msg)
