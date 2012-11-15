@@ -156,9 +156,14 @@ function judge(notes, x, pop_image)
 		notes.sort();
 		notes.shift();
 		
-		var y = CANVAS_HEIGHT - NOTE_TOUCH_CHECK_BAR_POSITION;
-		addImageAnimationObjects(x, y, pop_image); 
-		addTextAnimationObjects(x, y + 2, "Cool", 20);
+		var drawText = "COOL";
+		var drawX = calcXforText(mainContext, drawText, CANVAS_WIDTH / 4);
+		var drawY = CANVAS_HEIGHT - NOTE_TOUCH_CHECK_BAR_POSITION;
+
+		var centerOfImageAnimation = x + ( CANVAS_WIDTH / 4 / 2);
+		
+		addImageAnimationObjects(centerOfImageAnimation, drawY, pop_image); 
+		addTextAnimationObjects(x + drawX, drawY - 2, drawText, 20);
 		
 		onHitNote();
 	}
@@ -166,22 +171,22 @@ function judge(notes, x, pop_image)
 
 function onGamePad1()
 {
-	judge(notes.pad1, 60, image_note1pop);
+	judge(notes.pad1, 0, image_note1pop);
 }
 
 function onGamePad2()
 {
-	judge(notes.pad2, 180, image_note2pop);
+	judge(notes.pad2, 120, image_note2pop);
 }
 
 function onGamePad3()
 {
-	judge(notes.pad3, 300, image_note3pop);
+	judge(notes.pad3, 240, image_note3pop);
 }
 
 function onGamePad4()
 {
-	judge(notes.pad4, 420, image_note4pop);
+	judge(notes.pad4, 360, image_note4pop);
 }
 
 function drawNoteImage(context, img, centerX, centerY)
@@ -193,6 +198,16 @@ function drawNoteImage(context, img, centerX, centerY)
 	var drawTileIndex = g_frameAcc % numberOfTile;
 	
 	context.drawImage(img, 0, drawTileIndex * tileUnitHeight, img.width, tileUnitHeight, centerX - centerOfImage, centerY - centerOfImage, img.width, tileUnitHeight);
+}
+
+function calcXforText(context, text, area_width)
+{
+	context.font = GAME_JUDGE_FONT;
+
+	var width = mainContext.measureText(text).width;
+	var x = ( area_width - width ) / 2;
+	
+	return x;
 }
 
 function drawNote(context, currentVideoTime, notes, loadedImage, x)
@@ -210,7 +225,9 @@ function drawNote(context, currentVideoTime, notes, loadedImage, x)
 		
 		if ( y >= (CANVAS_HEIGHT)) ///< 화면 아래로 내려간 노트는 miss 를 표시하면서 노트 배열에서 삭제.
 		{
-			addTextAnimationObjects(x, CANVAS_HEIGHT - NOTE_TOUCH_CHECK_BAR_POSITION + 2, "Miss", 20);
+			var drawText = "BREAK";
+			var drawX = calcXforText(context, drawText, CANVAS_WIDTH / 4);
+			addTextAnimationObjects(x + drawX, CANVAS_HEIGHT - NOTE_TOUCH_CHECK_BAR_POSITION + 2, drawText, 20);
 			
 			notes.shift();
 			i = -1;
