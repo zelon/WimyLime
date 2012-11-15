@@ -2,6 +2,9 @@
 var CANVAS_WIDTH = 480;
 var CANVAS_HEIGHT = 400;
 
+const NOTE_TOUCH_CHECK_BAR_POSITION = 20.0;
+const JUDGE_TEXT_Y_POSITION = CANVAS_HEIGHT - NOTE_TOUCH_CHECK_BAR_POSITION - 20; 
+
 var KEYCODE_Z = 90;
 var KEYCODE_X = 88;
 var KEYCODE_C = 67;
@@ -11,6 +14,7 @@ var FPS = 30;
 
 const GAME_JUDGE_FONT = "bold 25px sans-serif";
 const GAME_STATUS_FONT = "bold 20px sans-serif";
+
 
 const MAX_HP = 10;
 const WARNING_HP = 3;
@@ -353,7 +357,7 @@ function addImageAnimationObjects(x, y, img)
 	animationObjects.push(ani);
 }
 
-function addTextAnimationObjects(x,y,msg, frame)
+function addTextAnimationObjects(x,y,msg, frame, strRGB)
 {
 	var ani = {};
 	
@@ -367,8 +371,25 @@ function addTextAnimationObjects(x,y,msg, frame)
 		if ( this.remainFrames <= 0 ) return false;
 		
 		context.font = GAME_JUDGE_FONT;
-		context.fillStyle = "rgba(255,255,255, " + 1.0 * ( this.remainFrames / frame) + ")";
+		
+		if ( strRGB )
+		{
+			context.fillStyle = "rgba(" + strRGB + ", " + 1.0 * ( this.remainFrames / frame) + ")";
+		}
+		else
+		{
+			context.fillStyle = "rgba(255,255,255, " + 1.0 * ( this.remainFrames / frame) + ")";
+		}
 		context.fillText(this.msg, this.x, this.y);
+		
+		if ( strRGB )
+		{
+			context.strokeStyle = "rgba(" + strRGB + ", " + 1.0 * ( this.remainFrames / frame) + ")";
+		}
+		else
+		{
+			context.strokeStyle = "rgba(0,0,0, " + 1.0 * ( this.remainFrames / frame) + ")";
+		}
 		
 		context.strokeStyle = "rgba(0,0,0, " + 1.0 * ( this.remainFrames / frame) + ")";
 		context.strokeText(this.msg, this.x, this.y);
