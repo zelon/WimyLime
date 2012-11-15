@@ -23,6 +23,11 @@ hr
 	border: solid #c0c0c0 2px;
 }
 
+#videoDiv
+{
+	height: 300px;
+}
+
 #outer_content
 {
 	width: 480px;
