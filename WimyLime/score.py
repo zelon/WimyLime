@@ -11,6 +11,24 @@ class score(webapp2.RequestHandler):
     def get(self, key):
         return self.request.get(key)
 
+    def getRank(self, totalNoteCount, hitNoteCount):
+        
+        rate = int(hitNoteCount) * 100 / int(totalNoteCount)
+        
+        if rate >= 99:
+            return "AAA"
+        
+        if rate >= 90:
+            return "A"
+        
+        if rate >= 70:
+            return "B"
+        
+        if rate >= 60:
+            return "C"
+        
+        return "F"
+        
     def post(self):
         
         args = self.request.arguments()
@@ -32,6 +50,8 @@ class score(webapp2.RequestHandler):
         
         if miss == "0":
             additional = "- PERFECT -"
+
+        rank = self.getRank(totalNotes, self.get("hit"))
         
         self.response.out.write("""
 <html>
@@ -62,20 +82,24 @@ class score(webapp2.RequestHandler):
             <br />
             <table id="result_table">
                 <tr>
-                    <th  class="result_header">Total Notes</td>
+                    <th  class="result_header">TOTAL NOTE</td>
                     <td class="result_data">""" + totalNotes + """</td>
                 </tr>
                 <tr>
-                    <th  class="result_header">Max Combo</td>
+                    <th  class="result_header">MAX COMBO</td>
                     <td class="result_data">""" + maxCombo + """</td>
                 </tr>
                 <tr>
-                    <th  class="result_header">Hit</td>
+                    <th  class="result_header">HIT</td>
                     <td class="result_data">""" + self.get("hit") + """</td>
                 </tr>
                 <tr>
-                    <th  class="result_header">Miss</td>
+                    <th  class="result_header">BREAK</td>
                     <td class="result_data">""" + miss + """</td>
+                </tr>
+                <tr>
+                    <th  class="result_header">RANK</td>
+                    <td class="result_data">""" + rank + """</td>
                 </tr>
                 <tr>
                     <td colspan="2"><hr /></td>
@@ -88,10 +112,9 @@ class score(webapp2.RequestHandler):
                     <td colspan="2" class="result_additional">""" + additional + """</td>
                 </tr>
             </table>
-            
-            <div id="result_play_again">
-                <a href='/player.htm?lime_index=""" + lime_index + """' ><span id="result_play_again">Play Again</span></a>
-            </div>
+            <br />
+            <span id="result_play_again"><a href='/list.htm'><span id="result_play_again">SELECT MUSIC</span></a></span>
+            <span id="result_play_again"><a href='/player.htm?lime_index=""" + lime_index + """' ><span id="result_play_again">PLAY AGAIN</span></a></span>
         </div>
     </div>
     <br />

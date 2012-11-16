@@ -307,8 +307,9 @@ input
 {
 	font-family: 'Audiowide', cursive;
 	color: white;
-	font-size: 150%;
+	font-size: 125%;
 	text-align: right;
+	text-decoration: underline;
 	margin: 20px;
 	margin-top: 100px;
 }
