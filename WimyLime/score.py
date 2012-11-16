@@ -56,6 +56,10 @@ class score(webapp2.RequestHandler):
         self.response.out.write("""
 <html>
 <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, user-scalable=no" />
+    <title>WimeLime - Rhythm Action with YouTube</title>
+
     <link href="style.css" rel="stylesheet" type="text/css" />
     
     <script src="http://www.google.com/jsapi" type="text/javascript"></script>
