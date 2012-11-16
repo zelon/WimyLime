@@ -69,7 +69,7 @@ class score(webapp2.RequestHandler):
 
 </head>
 <body id="mainBody" onload="requestBackgroundImage('""" + videoid + """');">
-    <div id="indexmain" style="background-color:black">
+    <div id="result_main">
         <div id="main_head">
             <span class="mainlogo">""" + resultMsg + """</span>
             <br /><br />

@@ -179,6 +179,43 @@ hr
 	margin-top: 20px;
 }
 
+@-webkit-keyframes fromTop
+{
+	0% { margin-top: -200px; }
+	100% { margin-top: 20px; }
+}
+
+@-webkit-keyframes showup
+{
+	0% { opacity: 0; }
+	100% { opacity: 1; }
+}
+
+@-webkit-keyframes blackWhite
+{
+	0% { color: white; box-shadow: 2px 2px 2px black; }
+	50% { color: #bbb; }
+	100% { color: white; box-shadow: 2px 2px 2px black; }
+}
+
+#result_main
+{
+	border: 2px #000000 solid;
+	border-radius: 5px 5px 5px 5px;
+	
+	width: 480px;
+	margin: 0px;
+	margin-left: auto;
+	margin-right: auto;
+
+	margin-top: 20px;
+
+	background-color:black;
+
+	-webkit-animation-name: fromTop;
+	-webkit-animation-duration: 1s;
+}
+
 #main_logo
 {
 	width: 15px;
@@ -272,6 +309,9 @@ input
 	color: white;
 	font-size: 200%;
 	text-align: center;
+
+	-webkit-animation-name: showup;
+	-webkit-animation-duration: 3s;
 }
 
 .result_score_header
@@ -288,6 +328,10 @@ input
 	color: white;
 	font-size: 300%;
 	text-align: center;
+
+	-webkit-animation-name: blackWhite;
+	-webkit-animation-duration: 1s;
+	-webkit-animation-iteration-count: infinite;
 }
 
 .result_additional
