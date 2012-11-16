@@ -78,10 +78,10 @@ class listLime(webapp2.RequestHandler):
         videoid = self.request.get("videoid")
         
         if videoid == "":
-            queryResult = LimeData.query().order(LimeData.insert_time)
+            queryResult = LimeData.query().order(-LimeData.insert_time)
             logging.info("get all")
         else:
-            queryResult = LimeData.query_limedata(videoid).order(LimeData.insert_time)
+            queryResult = LimeData.query_limedata(videoid).order(-LimeData.insert_time)
         
         result = []
         
