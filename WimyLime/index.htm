@@ -22,9 +22,9 @@
 			</div>
 		</div>
 		<div id="main_inner">
-			<p><a href="startRecord.htm" class="menu">+Create</a></p>
+			<p><a href="startRecord.htm" class="menu">Create</a></p>
 			<br />
-			<p><a href="list.htm" class="menu">@Play</a></p>
+			<p><a href="list.htm" class="menu">Play</a></p>
 			<hr />
 			<table id="lime_table" width="90%" align="center">
 				<tr>
@@ -53,15 +53,15 @@
 			{
 				result = "<table width='100%'>";
 				result += "<tr>";
-					result += "<th>제목</th><th>리듬 만든 이</th>";
+					result += "<th>제목</th><th>제작자</th>";
 				result += "</tr>";
 				for ( var i=0; i<responseJSON.length; ++i )
 				{
 					item = responseJSON[i];
 	
 					result += "<tr>";
-					result += "<td align='center'><a href='player.htm?lime_index=" + item.index + "'>" + item.title + "</td>";
-					result += "<td>" + item.author + "</td>";
+					result += "<td align='center'><a href='player.htm?lime_index=" + item.index + "'>" + item.title + "</a></td>";
+					result += "<td><a href='player.htm?lime_index=" + item.index + "'>" + item.author + "</a></td>";
 	   				result += "</tr>";
 	
 	   				if ( i == 5 )

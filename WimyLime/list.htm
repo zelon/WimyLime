@@ -35,15 +35,15 @@
 			{
 				result = "<table class='data_table'>";
 				result += "<tr>";
-					result += "<th>제목</th><th>리듬 만든 이</th>";
+					result += "<th>제목</th><th>제작자</th>";
 				result += "</tr>";
 				for ( var i=0; i<responseJSON.length; ++i )
 				{
 					item = responseJSON[i];
 	
 					result += "<tr>";
-					result += "<td><a href='player.htm?lime_index=" + item.index + "'>" + item.title + "</td>";
-					result += "<td>" + item.author + "</td>";
+					result += "<td><a href='player.htm?lime_index=" + item.index + "'>" + item.title + "</a></td>";
+					result += "<td><a href='player.htm?lime_index=" + item.index + "'>" + item.author + "</a></td>";
 	   				result += "</tr>";
 	
 				}
