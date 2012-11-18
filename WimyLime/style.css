@@ -74,7 +74,7 @@ hr
 #controller
 {
 	width: 100%;
-	height: 70px;
+	height: 65px;
 	
 	padding: 0px;
 	margin: 0px;
@@ -87,7 +87,7 @@ hr
 #inputTable
 {
 	width: 100%;
-	height: 70px;
+	height: 65px;
 	background-color: white;
 	border-collapse: collapse;
 }
@@ -95,7 +95,7 @@ hr
 #inputPadZ, #inputPadX, #inputPadC, #inputPadV
 {
 	width:110px;
-	height:70px;
+	height:50px;
 	background-color: red;
 }
 #inputPad1
