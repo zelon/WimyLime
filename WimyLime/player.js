@@ -28,6 +28,8 @@ function loadData()
 	scoreData["score"] = 0;
 	scoreData["clear"] = "not cleared";
 	
+	hp = MAX_HP;
+	
 	lime_index = getUrlVars()["lime_index"];
 
 	request("/loadLime.py?lime_index=" + lime_index,
