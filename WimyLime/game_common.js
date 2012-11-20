@@ -10,6 +10,9 @@ var KEYCODE_X = 88;
 var KEYCODE_C = 67;
 var KEYCODE_V = 86;
 
+var CHARCODE_PLUS = 43;
+var CHARCODE_MINUS = 45;
+
 var FPS = 30;
 
 const GAME_JUDGE_FONT = "bold 25px sans-serif";
@@ -209,6 +212,25 @@ function debugMsg(msg)
 	var output = document.getElementById("output");
 	
 	output.innerHTML = msg + "<br/>" + output.innerHTML;
+}
+
+function onCommandKeyPress(event)
+{
+	if ( event.charCode == CHARCODE_PLUS )
+	{
+		if ( onGameSpeedUp )
+		{
+			onGameSpeedUp();
+		}
+	}
+	
+	if ( event.charCode == CHARCODE_MINUS )
+	{
+		if ( onGameSpeedDown )
+		{
+			onGameSpeedDown();
+		}
+	}
 }
 
 function onGameKeyDown(event)
@@ -488,6 +510,6 @@ function drawBackground(context)
 	context.fillRect(0,0, CANVAS_WIDTH, CANVAS_HEIGHT);
 }
 
-
+document.onkeypress = onCommandKeyPress;
 document.onkeydown=onGameKeyDown;
 document.onkeyup=onGameKeyUp;

@@ -17,6 +17,34 @@ var videoid = "";
 var playerJS_youTubePlayerRef = null;
 var playerJS_youTubePlayerVolumeBackup = null;
 
+var SPEED = 1;
+var ToBeSPEED = 1;
+
+var SPEED_CANDIDATE = [0.5, 1, 1.5, 2, 3, 4, 8];
+var SPEED_CURRENT_INDEX = 1;
+
+function onGameSpeedUp()
+{
+	++SPEED_CURRENT_INDEX;
+	
+	if ( SPEED_CURRENT_INDEX == SPEED_CANDIDATE.length )
+	{
+		SPEED_CURRENT_INDEX = SPEED_CANDIDATE.length - 1;
+	}
+	ToBeSPEED = SPEED_CANDIDATE[SPEED_CURRENT_INDEX];
+}
+
+function onGameSpeedDown()
+{
+	--SPEED_CURRENT_INDEX;
+	
+	if ( SPEED_CURRENT_INDEX < 0 )
+	{
+		SPEED_CURRENT_INDEX = 0;
+	}
+	ToBeSPEED = SPEED_CANDIDATE[SPEED_CURRENT_INDEX];
+}
+
 function countNotes(notes)
 {
 	return notes.pad1.length + notes.pad2.length + notes.pad3.length + notes.pad4.length;
@@ -228,7 +256,6 @@ function calcXforText(context, text, area_width)
 
 function drawNote(context, currentVideoTime, notes, loadedImage, x)
 {
-	var SPEED = 1;
 	
 	for ( var i=0; i<notes.length; ++i )
    	{
@@ -238,7 +265,7 @@ function drawNote(context, currentVideoTime, notes, loadedImage, x)
 		
 		if ( y <= 0 ) ///< 화면 밖에서 내려오고 있는 노트는 그리지 않는다.
 		{
-			continue;
+			break;
 		}
 		
 		if ( y >= (CANVAS_HEIGHT)) ///< 화면 아래로 내려간 노트는 miss 를 표시하면서 노트 배열에서 삭제.
@@ -325,8 +352,6 @@ function drawAllNote(context)
 	}
 }
 
-
-
 function drawCheckBar(context)
 {
 	context.fillStyle = "rgb(255,255,255)";
@@ -337,6 +362,30 @@ function drawHP(context)
 {
 	context.fillStyle = "rgb(255,255,255)";
 	context.fillRect(0, 0, 50, CANVAS_HEIGHT * hp / MAX_HP);
+}
+
+function checkSpeedChange()
+{
+	if ( ToBeSPEED == SPEED ) return;
+	
+	if ( ToBeSPEED > SPEED )
+	{
+		SPEED = SPEED + 0.1;
+		
+		if ( SPEED > ToBeSPEED )
+		{
+			SPEED = ToBeSPEED;
+		}
+	}
+	else
+	{
+		SPEED = SPEED - 0.1;
+
+		if ( SPEED < ToBeSPEED )
+		{
+			SPEED = ToBeSPEED;
+		}
+	}
 }
 
 var mainContext = null;
@@ -359,6 +408,8 @@ function draw()
 	
 	drawPadEffect(context);
 	drawAnimationObjects(context);
+	
+	checkSpeedChange();
 }
 
 
