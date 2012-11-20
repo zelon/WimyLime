@@ -40,6 +40,7 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 var g_youtubePlayer;
 var g_youtubeReady = false;
 var g_youtubeVideoID = "";
+var g_youtubeReadyCallback = null;
 
 function waitingYouTubeAndPlay()
 {
@@ -69,9 +70,10 @@ function waitingYouTubeAndPlay()
     );
 }
 
-function playYouTubeWhenReady(videoid)
+function playYouTubeWhenReady(videoid, readyCallback)
 {
 	g_youtubeVideoID = videoid;
+	g_youtubeReadyCallback = readyCallback;
 	
 	setTimeout(waitingYouTubeAndPlay, 1000);
 }
@@ -84,6 +86,11 @@ function onYouTubeIframeAPIReady()
 // 4. The API will call this function when the video player is ready.
 function onPlayerReady(event)
 {
+	if ( g_youtubeReadyCallback )
+	{
+		g_youtubeReadyCallback(g_youtubePlayer);
+	}
+
 	event.target.playVideo();
 }
 
@@ -95,7 +102,6 @@ function onPlayerStateChange(event)
 {
     if (event.data == YT.PlayerState.PLAYING && !done)
     {
-    	event.target.setVolume(100);
     	done = true;
     }
 }

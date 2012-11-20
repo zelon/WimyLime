@@ -14,9 +14,20 @@ var lime_index = -1;
 var scoreData = {};
 var videoid = "";
 
+var playerJS_youTubePlayerRef = null;
+var playerJS_youTubePlayerVolumeBackup = null;
+
 function countNotes(notes)
 {
 	return notes.pad1.length + notes.pad2.length + notes.pad3.length + notes.pad4.length;
+}
+
+function onYouTubePlayerReady(youtubePlayer)
+{
+	playerJS_youTubePlayerRef = youtubePlayer;
+	playerJS_youTubePlayerVolumeBackup = youtubePlayer.getVolume();
+	
+	youtubePlayer.setVolume(100);
 }
 
 function loadData()
@@ -45,10 +56,14 @@ function loadData()
 				{
 					end_second = responseJSON["end_second"];
 				}
+				else
+				{
+					alert("End second is wrong");
+				}
 				
 				requestBackgroundImage(videoid);
 				
-				playYouTubeWhenReady(videoid);
+				playYouTubeWhenReady(videoid, onYouTubePlayerReady);
 			}
 			,
 			function(responseJSON)
@@ -265,6 +280,31 @@ function moveToScorePage()
 	);
 }
 
+function volumeFadeoutAtEndOfRhythm(currentTime)
+{
+	var remainSeconds = Number(end_second) - Number(currentTime) - 0.3;
+	
+	if ( remainSeconds < 1.0 )
+	{
+		if ( g_youtubePlayer )
+		{
+			var newVolume = 100 * remainSeconds;
+			
+			g_youtubePlayer.setVolume ( newVolume );
+			
+			if ( newVolume <= 0 )
+			{
+				g_youtubePlayer.pauseVideo();
+				
+				if ( playerJS_youTubePlayerVolumeBackup )
+				{
+					g_youtubePlayer.setVolume ( playerJS_youTubePlayerVolumeBackup );
+				}
+			}
+		}
+	}
+}
+
 function drawAllNote(context)
 {
 	if ( g_youtubePlayer && g_youtubePlayer.getCurrentTime )
@@ -275,13 +315,8 @@ function drawAllNote(context)
 		drawNote(context, currentVideoTime, notes.pad2, image_note2, 120);
 		drawNote(context, currentVideoTime, notes.pad3, image_note3, 240);
 		drawNote(context, currentVideoTime, notes.pad4, image_note4, 360);
-		
-		var remainSeconds = Number(end_second) - Number(currentVideoTime) - 0.3;
-		
-		if ( remainSeconds < 1.0 )
-		{
-			g_youtubePlayer.setVolume ( 100 * remainSeconds );
-		}
+
+		volumeFadeoutAtEndOfRhythm(currentVideoTime);
 		
 		if ( currentVideoTime >= end_second )
 		{
