@@ -169,9 +169,7 @@ function judge(notes, x, pop_image)
 	
 	if ( index != -1 )
 	{
-		notes[index] = -1;
-		notes.sort();
-		notes.shift();
+		notes[index] = null;
 		
 		var drawText = "COOL";
 		var drawX = calcXforText(mainContext, drawText, CANVAS_WIDTH / 4);
@@ -234,6 +232,8 @@ function drawNote(context, currentVideoTime, notes, loadedImage, x)
 	
 	for ( var i=0; i<notes.length; ++i )
    	{
+		if ( notes[i] == null ) continue;
+		
 		var y = (CANVAS_HEIGHT -  NOTE_TOUCH_CHECK_BAR_POSITION) - (( notes[i] - currentVideoTime ) * 200.0 * SPEED );
 		
 		if ( y <= 0 ) ///< 화면 밖에서 내려오고 있는 노트는 그리지 않는다.
@@ -246,9 +246,8 @@ function drawNote(context, currentVideoTime, notes, loadedImage, x)
 			var drawText = "BREAK";
 			var drawX = calcXforText(context, drawText, CANVAS_WIDTH / 4);
 			addTextAnimationObjects(x + drawX, JUDGE_TEXT_Y_POSITION, drawText, 20, "255,10,10");
-			
-			notes.shift();
-			i = -1;
+
+			notes[i] = null;
 			
 			onMissNote();
 		}
