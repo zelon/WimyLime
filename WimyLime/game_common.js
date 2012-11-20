@@ -123,7 +123,7 @@ function onKey_Z()
 	}
 	pressed_Z=true;
 	pressInputPad("inputPad1");
-	debugMsg("Z");
+	//debugMsg("Z");
 
 	draw();
 }
@@ -136,7 +136,7 @@ function onKey_X()
 	}
 	pressed_X=true;
 	pressInputPad("inputPad2");
-	debugMsg("X");
+	//debugMsg("X");
 
 	draw();
 }
@@ -149,7 +149,7 @@ function onKey_C()
 	}
 	pressed_C=true;
 	pressInputPad("inputPad3");
-	debugMsg("C");
+	//debugMsg("C");
 
 	draw();
 }
@@ -164,13 +164,13 @@ function onKey_V()
 	pressInputPad("inputPad4");
 
 	draw();
-	debugMsg("V");
+	//debugMsg("V");
 }
 
 function onKeyUp_Z()
 {
 	pressed_Z=false;
-	debugMsg("Z");
+	//debugMsg("Z");
 	upInputPad("inputPad1");
 	draw();
 }
@@ -179,7 +179,7 @@ function onKeyUp_X()
 {
 	pressed_X=false;
 	upInputPad("inputPad2");
-	debugMsg("X");
+	//debugMsg("X");
 
 	draw();
 }
@@ -188,7 +188,7 @@ function onKeyUp_C()
 {
 	pressed_C=false;
 	upInputPad("inputPad3");
-	debugMsg("C");
+	//debugMsg("C");
 
 	draw();
 }
@@ -197,7 +197,7 @@ function onKeyUp_V()
 {
 	pressed_V=false;
 	upInputPad("inputPad4");
-	debugMsg("V");
+	//debugMsg("V");
 
 	draw();
 }
