@@ -333,6 +333,12 @@ function drawCheckBar(context)
 	context.fillRect(0, CANVAS_HEIGHT - NOTE_TOUCH_CHECK_BAR_POSITION, CANVAS_WIDTH, 2);
 }
 
+function drawHP(context)
+{
+	context.fillStyle = "rgb(255,255,255)";
+	context.fillRect(0, 0, 50, CANVAS_HEIGHT * hp / MAX_HP);
+}
+
 var mainContext = null;
 function draw()
 {
@@ -348,6 +354,9 @@ function draw()
 	drawAllNote(context);
 	
 	drawCheckBar(context);
+	
+	//drawHP(context);
+	
 	drawPadEffect(context);
 	drawAnimationObjects(context);
 }
