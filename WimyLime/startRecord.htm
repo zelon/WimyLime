@@ -34,11 +34,15 @@
 				<table width="90%" align="center">
 					<tr>
 						<td><a href='http://www.youtube.com/'>YouTube</a> 비디오 주소 : </td>
-						<td><input type="text" size="45" name="videoURL" id="videoURL" onchange="checkTitle()" required="required" placeholder="YouTube 에서 검색한 동영상의 주소를 입력하세요"></td>
+						<td style="height: 50px;">
+							<input type="text" size="45" name="videoURL" id="videoURL" onchange="checkTitle()" required="required" placeholder="YouTube 에서 검색한 동영상의 주소를 입력하세요">
+							<br/>
+							<span id="status">&nbsp;</span>
+						</td>
 					</tr>
 					<tr>
 						<td></td>
-						<td><span id="status"></span></td>
+						<td></td>
 					</tr>
 					<tr>
 						<td>제작자 : </td>
