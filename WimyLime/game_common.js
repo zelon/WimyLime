@@ -411,13 +411,6 @@ function drawAnimationObjects(context)
 {
 	for ( var i=0; i<animationObjects.length; ++i )
 	{
-		if ( i == 0 && animationObjects[i] == null )
-		{
-			animationObjects.shift();
-			i = -1;
-			continue;
-		}
-		
 		if ( animationObjects[i] != null )
 		{
 			var ret = animationObjects[i].draw(context);
