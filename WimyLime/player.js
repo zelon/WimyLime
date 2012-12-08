@@ -20,7 +20,7 @@ var playerJS_youTubePlayerVolumeBackup = null;
 var SPEED = 1;
 var ToBeSPEED = 1;
 
-var SPEED_CANDIDATE = [0.5, 1, 1.5, 2, 3, 4, 8];
+var SPEED_CANDIDATE = [0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5];
 var SPEED_CURRENT_INDEX = 1;
 
 function onGameSpeedUp()
