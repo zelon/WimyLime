@@ -5,7 +5,15 @@ Vision
  
  
 Todo
- - BREAK 후 노트가 사라지는 버그 찾기
  - 전체 한글화?
  - css 를 이용한 백그라운드 이미지 전환
- - 
+ - 리듬이 비슷한 위치에 있을 때 뭉치는 옵션(생성시)
+ - long press
+ - play count
+ - audio 파싱을 통한 beat line 그려보기... 가능하려나... 최근 2개의 베이스를 가지고 다음 base line 을 알아보자.
+ - result page 에서 비디오 제목 보여주기
+ - record 할 때 배경 깜빡임 끄기
+ - record 할 때 아래에 버튼 있음 알려주기
+ - record 할 때 작은 팁들 돌리면서 보여주기
+ - 플레이중 youtube 버퍼링될 때 처리...
+ - 플레이끝날 때 배경 투명하게 한 후, 전체도 투명하게 해서 result page 로 넘어가자.
